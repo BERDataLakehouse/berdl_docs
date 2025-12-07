@@ -4,6 +4,8 @@ This directory contains documentation for the BERDL purpose-built data lakehouse
 
 All source code repositories are located in the [BERDataLakehouse GitHub Organization](https://github.com/BERDataLakehouse).
 
+> **Note**: This documentation provides a brief introduction to each core component of the BERDL system. For detailed development and service information, please refer to each repository's README file.
+
 ## System Architecture
 
 BERDL utilizes a microservices architecture to provide a secure, scalable, and interactive data analysis environment. The core components include dynamic notebook spawning, secure credential management, and an MCP (Model Context Protocol) server for AI-assisted data operations.
