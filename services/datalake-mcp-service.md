@@ -35,8 +35,33 @@ graph LR
     DS -->|S3 API| IO[MinIO]
 ```
 
+## API Endpoints
+
+### Delta Lake Operations (`/delta/*`)
+| Method | Endpoint | Description |
+|--------|----------|-------------|
+| POST | `/delta/databases/list` | List all databases in the Hive metastore. Supports namespace filtering. |
+| POST | `/delta/databases/tables/list` | List all tables in a specific database. |
+| POST | `/delta/databases/tables/schema` | Get the schema (columns) of a specific table. |
+| POST | `/delta/databases/structure` | Get the complete structure of all databases with optional schemas. |
+| POST | `/delta/tables/count` | Get row count for a Delta table. |
+| POST | `/delta/tables/sample` | Retrieve a sample of rows from a Delta table. |
+| POST | `/delta/tables/query` | Execute a raw SQL query against a Delta table. |
+| POST | `/delta/tables/select` | Execute a structured SELECT query with JOINs, aggregations, pagination. |
+
+### Health (`/health`)
+| Method | Endpoint | Description |
+|--------|----------|-------------|
+| GET | `/health` | Deep health check for Redis, Hive Metastore, and other backend services. |
+
+### MCP Interface (`/mcp`)
+| Method | Endpoint | Description |
+|--------|----------|-------------|
+| * | `/mcp` | MCP protocol endpoint. All `/delta/*` endpoints are exposed as MCP tools. |
+
 ## Integrations
 
 - **Spark Connect**: Connects to user's dynamic cluster or falls back to shared static cluster.
 - **Hive Metastore**: `thrift://hive-metastore:9083` - Table metadata.
 - **MinIO**: `http://minio:9002` - Underlying S3 storage.
+- **Redis**: Caching layer for improved performance.

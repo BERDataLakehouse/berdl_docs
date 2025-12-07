@@ -5,6 +5,7 @@
 | | |
 |---|---|
 | **Docker Image** | `ghcr.io/berdatalakehouse/hive_metastore:main` |
+| **GitHub Repo** | [hive_metastore](https://github.com/BERDataLakehouse/hive_metastore) |
 
 ## Overview
 

@@ -31,6 +31,36 @@ graph TD
 
 ## API Endpoints
 
-- **GET /credentials/**: Returns valid S3 access/secret keys for the authenticated user.
-- **POST /groups/**: Manage user groups.
-- **POST /share/**: Share paths with other users/groups.
+### Credentials (JupyterHub Integration)
+| Method | Endpoint | Description |
+|--------|----------|-------------|
+| GET | `/credentials/` | Returns fresh S3 access/secret keys for the authenticated user. Auto-creates user if needed. |
+
+### Sharing (User-facing)
+| Method | Endpoint | Description |
+|--------|----------|-------------|
+| POST | `/sharing/share` | Share an S3 path with specified users and/or groups. |
+| POST | `/sharing/unshare` | Remove sharing permissions from users/groups. |
+| POST | `/sharing/make-public` | Make a path publicly accessible to all users. |
+| POST | `/sharing/make-private` | Remove a path from all shared access (owner only). |
+| POST | `/sharing/get_path_access_info` | Get users/groups that have access to a path. |
+
+### Workspaces
+| Method | Endpoint | Description |
+|--------|----------|-------------|
+| GET | `/workspaces/*` | Various endpoints for listing user workspaces and files. |
+
+### Management (Admin-only)
+| Method | Endpoint | Description |
+|--------|----------|-------------|
+| GET | `/management/users` | List all users (paginated). |
+| POST | `/management/users/{username}` | Create a new user. |
+| POST | `/management/users/{username}/rotate-credentials` | Force credential rotation. |
+| DELETE | `/management/users/{username}` | Delete a user. |
+| GET | `/management/groups` | List all groups. |
+| POST | `/management/groups/{group_name}` | Create a new group. |
+| POST | `/management/groups/{group_name}/members/{username}` | Add user to group. |
+| DELETE | `/management/groups/{group_name}/members/{username}` | Remove user from group. |
+| DELETE | `/management/groups/{group_name}` | Delete a group. |
+| GET | `/management/policies` | List all policies (paginated). |
+| DELETE | `/management/policies/{policy_name}` | Delete a policy. |
