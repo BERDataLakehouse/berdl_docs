@@ -20,11 +20,13 @@ The Spark Notebook is the primary user interface for the BERDL platform. It prov
 
 ## Lifecycle
 
-1. **Spawning**: When a user logs into JupyterHub, a dedicated container is spawned.
-2. **Initialization**:
-    - `entrypoint.sh` sets up user permissions.
-    - `patch_jupyter_ai.py` configures AI assistants.
-    - `setup_spark_session.py` (via `notebook_utils`) initializes Spark with credentials from MinIO Manager Service.
+1. **Spawning**: When a user logs into JupyterHub, a dedicated container is spawned via KubeSpawner.
+2. **Cluster Creation**: JupyterHub triggers the Spark Cluster Manager to create a dynamic Spark cluster for the user.
+3. **Credential Injection**: JupyterHub calls the MinIO Manager Service to initialize user policies and inject S3 credentials.
+4. **Initialization**:
+    - `entrypoint.sh` sets up user permissions and environment.
+    - `setup_spark_session.py` (via `notebook_utils`) initializes Spark with the injected credentials.
+5. **Ready**: User can now run Spark jobs against their personal dynamic cluster with access to their data in MinIO.
 
 ## Architecture
 
