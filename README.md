@@ -30,6 +30,11 @@ graph TD
         MCP[Datalake MCP Server]
     end
 
+    subgraph Admin ["Admin Services"]
+        TAS[Tenant Access Request]
+        Slack([Slack])
+    end
+
     subgraph Compute ["Compute Layer"]
         DYNC[Dynamic Spark Cluster]
         SM[Shared Static Cluster]
@@ -60,6 +65,11 @@ graph TD
     NB -->|Auth| MMS
     NB -->|Query| MCP
     
+    %% Admin Flow (Access Requests)
+    NB -->|Request Access| TAS
+    TAS -->|Notify| Slack
+    TAS -->|Add to Group| MMS
+    
     %% MCP Logic
     MCP -->|Direct/Fallback| SM
     MCP -->|Via Hub| DYNC
@@ -75,10 +85,12 @@ graph TD
     classDef service fill:#f9f,stroke:#333,stroke-width:2px;
     classDef storage fill:#ff9,stroke:#333,stroke-width:2px;
     classDef compute fill:#cce6ff,stroke:#333,stroke-width:2px;
+    classDef external fill:#e8e8e8,stroke:#333,stroke-width:1px;
     
-    class JH,NB,MMS,SCM,MCP service;
+    class JH,NB,MMS,SCM,MCP,TAS service;
     class S3,HM,Disk storage;
     class DYNC,SM compute;
+    class Slack external;
 ```
 
 ## Container Dependency Architecture
@@ -105,6 +117,7 @@ graph TD
         MMS[minio_manager_service]
         SCM[spark_cluster_manager]
         JH[BERDL_JupyterHub]
+        TAS[tenant_access_request_service]
     end
 
     %% Dynamic Compute
@@ -122,6 +135,7 @@ graph TD
     
     PUB_JH -->|FROM| JH
     PY313 -->|FROM| MMS
+    PY313 -->|FROM| TAS
     PY311 -->|FROM| SCM
     
     %% Styling
@@ -132,7 +146,7 @@ graph TD
 
     class JQ,PUB_JH,PY313,PY311 external;
     class id1 internal;
-    class NB,MCP,MMS,SCM,JH service;
+    class NB,MCP,MMS,SCM,JH,TAS service;
     class DYNC compute;
 ```
 
@@ -197,3 +211,5 @@ graph TD
 | **Spark Cluster Manager** | API for managing dynamic, personal Spark clusters on K8s (Primary for Users). | [Spark Cluster Manager](./services/spark-cluster-manager.md) | [Repo](https://github.com/BERDataLakehouse/spark_cluster_manager) |
 | **Hive Metastore** | Stores metadata for Delta Lake tables. | [Hive Metastore](./services/hive-metastore.md) | [Repo](https://github.com/BERDataLakehouse/hive_metastore) |
 | **Spark Cluster** | Spark master/worker image for static and dynamic clusters. | [Spark Cluster](./services/spark-cluster.md) | [Repo](https://github.com/BERDataLakehouse/kube_spark_manager_image) |
+| **BERDL Access Request Extension** | JupyterLab extension providing UI for tenant access requests. | [Access Request Extension](./services/berdl-access-request-extension.md) | [Repo](https://github.com/BERDataLakehouse/berdl_access_request_extension) |
+| **Tenant Access Request Service** | Self-service Slack workflow for users to request access to tenant groups. | [Tenant Access Request Service](./services/tenant-access-request-service.md) | [Repo](https://github.com/BERDataLakehouse/tenant_access_request_service) |

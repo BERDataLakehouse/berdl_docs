@@ -17,6 +17,7 @@ The Spark Notebook is the primary user interface for the BERDL platform. It prov
 - **JupyterLab**: Full-featured notebook environment.
 - **Pre-configured Spark**: Ready-to-use Spark session with credentials auto-injected.
 - **AI Integration**: Includes `jupyter-ai` for AI-assisted coding.
+- **Tenant Access UI**: Built-in [Access Request Extension](./berdl-access-request-extension.md) for requesting data access.
 
 ## Lifecycle
 
