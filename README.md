@@ -15,16 +15,24 @@ All BERDL services require **KBase authentication** using a KBase Token. Users m
 BERDL utilizes a microservices architecture to provide a secure, scalable, and interactive data analysis environment. The core components include dynamic notebook spawning, secure credential management, and an MCP (Model Context Protocol) server for AI-assisted data operations.
 
 ```mermaid
-graph TD
-    %% Use subgraphs to organize hierarchically
-    
+graph LR
     subgraph Users ["User Layer"]
+        direction TB
         User([User])
+        Remote([BERDL Remote CLI])
+        SPXClient([Spark Connect Client])
     end
 
     subgraph Entry ["Platform Entry"]
+        direction TB
         JH[BERDL JupyterHub]
+        SPX[Spark Connect Proxy]
+    end
+
+    subgraph Workspaces ["User Environments"]
+        direction TB
         NB[Spark Notebook]
+        DYNC[Dynamic Spark Cluster]
     end
 
     subgraph Core ["Core Services"]
@@ -32,58 +40,65 @@ graph TD
         MMS[MinIO Manager Service]
         SCM[Spark Cluster Manager]
         MCP[Datalake MCP Server]
+        TAS[Tenant Access Service]
     end
 
-    subgraph Admin ["Admin Services"]
-        TAS[Tenant Access Request]
-        Slack([Slack])
-    end
-
-    subgraph Compute ["Compute Layer"]
-        DYNC[Dynamic Spark Cluster]
+    subgraph Compute ["Shared Compute"]
+        direction TB
         SM[Shared Static Cluster]
     end
 
     subgraph Data ["Data & Metadata"]
+        direction TB
+        POL[Apache Polaris]
         S3[MinIO Storage]
-        HM[Hive Metastore]
-        Disk[(Storage)]
     end
 
-    %% Interactions
-    
+    subgraph Infra ["Infrastructure & External"]
+        direction TB
+        PG[(PostgreSQL)]
+        Disk[(Persistent Disk)]
+        Slack([Slack])
+    end
+
     %% User Entry Flow
-    User -->|"Browser (Login & UI)"| JH
-    User -->|Direct API| MCP
+    User -->|"Browser/API"| JH
+    User -->|"Direct API"| MCP
+    Remote -->|"API/Kernels"| JH
+    SPXClient -->|"gRPC"| SPX
     
-    %% JupyterHub Internal Flow
-    JH -->|Proxies UI| NB
-    JH -->|Init Policy| MMS
-    JH -->|Trigger Create| SCM
+    %% Entry Routing
+    JH -->|"Proxies UI"| NB
+    JH -->|"Init Policy"| MMS
+    JH -->|"Trigger Create"| SCM
+    SPX -->|"Tunnels to kernel"| NB
     
-    %% Service Logic
-    SCM -->|Spawns| DYNC
-    NB -->|Uses| DYNC
+    %% Workspace Interactions
+    NB -->|"Uses"| DYNC
+    NB -->|"Auth"| MMS
+    NB -->|"Query"| MCP
+    NB -->|"Request Access"| TAS
     
-    %% Notebook Interactions
-    NB -->|Auth| MMS
-    NB -->|Query| MCP
-    
-    %% Admin Flow (Access Requests)
-    NB -->|Request Access| TAS
-    TAS -->|Notify| Slack
-    TAS -->|Add to Group| MMS
-    
-    %% MCP Logic
-    MCP -->|Direct/Fallback| SM
-    MCP -->|Via Hub| DYNC
+    %% Core Services Logic
+    SCM -->|"Spawns"| DYNC
+    TAS -->|"Notify"| Slack
+    TAS -->|"Add to Group"| MMS
+    MCP -->|"Direct/Fallback"| SM
+    MCP -->|"Via Hub"| DYNC
+    MMS -->|"Manage Catalogs"| POL
+    MMS -->|"Manage Policies"| S3
     
     %% Data Access
-    NB -->|S3| S3
-    NB -->|Meta| HM
-    DYNC -->|Process| S3
-    SM -->|Process| S3
-    S3 -.-> Disk
+    NB -->|"S3"| S3
+    NB -->|"REST"| POL
+    MCP -->|"S3"| S3
+    MCP -->|"REST"| POL
+    DYNC -->|"Process"| S3
+    SM -->|"Process"| S3
+    
+    %% Infrastructure Backends
+    POL -->|"Store"| PG
+    S3 -.->|"Disk"| Disk
 
     %% Styling
     classDef service fill:#f9f,stroke:#333,stroke-width:2px;
@@ -91,10 +106,10 @@ graph TD
     classDef compute fill:#cce6ff,stroke:#333,stroke-width:2px;
     classDef external fill:#e8e8e8,stroke:#333,stroke-width:1px;
     
-    class JH,NB,MMS,SCM,MCP,TAS service;
-    class S3,HM,Disk storage;
+    class JH,NB,MMS,SCM,MCP,TAS,SPX service;
+    class S3,POL,PG,Disk storage;
     class DYNC,SM compute;
-    class Slack external;
+    class Slack,Remote,SPXClient external;
 ```
 
 ## Container Dependency Architecture
@@ -171,7 +186,6 @@ graph TD
     SMC[cdm-spark-manager-client]
     MMSC[minio-manager-service-client]
     MCPC[datalake-mcp-server-client]
-    SRC[spark-connect-remote]
     
     %% Base Package
     subgraph Base ["spark_notebook_base"]
@@ -196,14 +210,6 @@ graph TD
     subgraph JupyterHub ["BERDL_JupyterHub"]
         JH[berdl-jupyterhub]
     end
-    
-    subgraph SparkRemote ["spark_connect_proxy"]
-        SPX[spark-connect-proxy]
-    end
-    
-    subgraph BERDLRemoteC ["berdl_remote"]
-        BRMC[berdl-remote]
-    end
 
     %% Dependencies
     PNB -->|Dep| SMC
@@ -219,18 +225,13 @@ graph TD
     ARE -.->|Env| NU
     TDB -.->|Env| NU
     
-    %% SPX and SRC 
-    SPX -->|Uses| MCP
-    SRC -->|Connects| SPX
-    BRMC -->|Connects| MCP
-    
     %% Styling
     classDef client fill:#ffedea,stroke:#cc0000,stroke-width:1px;
     classDef pkg fill:#e1f5fe,stroke:#01579b,stroke-width:2px;
     classDef ext fill:#e8f5e9,stroke:#2e7d32,stroke-width:2px;
     
-    class SMC,MMSC,MCPC,SRC client;
-    class PNB,NU,MCP,JH,SPX,BRMC pkg;
+    class SMC,MMSC,MCPC client;
+    class PNB,NU,MCP,JH pkg;
     class ARE,TDB,CBA ext;
 ```
 
