@@ -9,14 +9,15 @@
 
 ## Overview
 
-The MinIO Manager Service is the central governance authority for the BERDL platform. It manages MinIO users, groups, and IAM policies dynamically, ensuring secure and isolated access to data.
+The MinIO Manager Service is the central governance authority for the BERDL platform. It programmatically provisions MinIO S3 storage policies and Apache Polaris (Iceberg REST) catalogs, providing dynamic credential management and unified access control for Spark applications.
 
 ## Key Features
 
-- **Dynamic Credentials**: Issues short-lived MinIO credentials for users and Spark sessions.
-- **Policy Enforcement**: Automatically updates IAM policies based on group membership and sharing settings.
-- **JupyterHub Integration**: Triggered by JupyterHub to **initialize user policies** and fetch credentials for spawned pods.
-- **Data Sharing**: Manages path-level access controls for sharing data between users and groups.
+- **Dynamic Credentials**: Issues short-lived MinIO credentials and Polaris principals for users and Spark sessions.
+- **Policy Enforcement**: Automatically updates IAM policies and Polaris RBAC catalog roles based on group membership.
+- **JupyterHub Integration**: Triggered by JupyterHub upon login to initialize user policies, create personal Iceberg catalogs, and fetch credentials for spawned pods.
+- **Dataset Isolation**: Provisions isolated S3 workspaces and Iceberg catalogs per user (`user_{username}`) and per tenant (`tenant_{groupname}`).
+- **Data Sharing**: Manages path-level and catalog-level access controls for sharing data securely.
 
 ## Architecture
 
@@ -24,9 +25,11 @@ The MinIO Manager Service is the central governance authority for the BERDL plat
 graph TD
     JH[JupyterHub] -->|Request Creds| MMS[MinIO Manager Service]
     MMS -->|Manage Users/Policies| MIN[MinIO Server]
+    MMS -->|Manage Catalogs/Roles| POL[Apache Polaris]
     MMS -->|Locking| REDIS[Redis]
     
-    User[User/Spark] -->|Use Creds| MIN
+    User[User/Spark] -->|Use S3 Creds| MIN
+    User -->|Use Iceberg REST| POL
 ```
 
 ## API Endpoints
@@ -39,10 +42,10 @@ graph TD
 ### Sharing (User-facing)
 | Method | Endpoint | Description |
 |--------|----------|-------------|
-| POST | `/sharing/share` | Share an S3 path with specified users and/or groups. |
-| POST | `/sharing/unshare` | Remove sharing permissions from users/groups. |
-| POST | `/sharing/make-public` | Make a path publicly accessible to all users. |
-| POST | `/sharing/make-private` | Remove a path from all shared access (owner only). |
+| POST | `/sharing/share` | **(DEPRECATED)** Share an S3 path with specified users and/or groups. Use Tenant Workspaces instead. |
+| POST | `/sharing/unshare` | **(DEPRECATED)** Remove sharing permissions from users/groups. Use Tenant Workspaces instead. |
+| POST | `/sharing/make-public` | **(DEPRECATED)** Make a path publicly accessible to all users. Use `globalusers` namespace instead. |
+| POST | `/sharing/make-private` | **(DEPRECATED)** Remove a path from all shared access (owner only). Use `globalusers` namespace instead. |
 | POST | `/sharing/get_path_access_info` | Get users/groups that have access to a path. |
 
 ### Workspaces

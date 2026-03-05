@@ -9,15 +9,15 @@
 
 ## Overview
 
-A deployment of JupyterHub specifically configured for Kubernetes. It allows users to spawn personal `spark_notebook` containers. It integrates with KBase for authentication and the MinIO Manager Service for data governance.
+A deployment of JupyterHub specifically configured for Kubernetes. It allows users to spawn personal `spark_notebook` containers directly as isolated pods. It integrates tightly with KBase Auth2 for authentication, the MinIO Manager Service for data lake governance, and the Spark Cluster Manager for dynamic compute allocation.
 
 ## Key Features
 
 - **KubeSpawner**: Spawns user environments as Kubernetes pods.
-- **Profiles**: Users can select "Small", "Medium", or "Large" resource profiles.
-- **Idle Culling**: Automatically stops idle servers to save resources.
+- **Profiles**: Users can select "Medium" or "Large" resource profiles.
+- **Idle Culling**: Automatically stops idle servers to save resources and compute.
 - **Integration**:
-    - **MinIO Manager Service**: Calls this service to **initialize user policies and groups** and fetch credentials.
+    - **MinIO Manager Service**: Calls this service on login to **initialize user policies and groups** and fetch temporary secure MinIO credentials.
     - **Spark Cluster Manager**: Automatically calls this service to **start a dynamic spark cluster** for each user upon login.
 
 ## Architecture

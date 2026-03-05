@@ -20,7 +20,8 @@ Both modes use the same image, configured via the `SPARK_MODE` environment varia
 ## Key Features
 
 - **Dual Mode Support**: Runs as either `master` or `worker` based on `SPARK_MODE` env var.
-- **Inherited Environment**: Built on `spark_notebook`, inheriting all Python dependencies and Spark configurations.
+- **Inherited Environment**: Built on `spark_notebook` Base, inheriting all Python dependencies and Spark configurations.
+- **Redis Caching Integration**: Includes built-in support for Redis caching to accelerate Spark DataFrame operations.
 - **K8s Native**: Designed for Kubernetes deployment with proper entrypoint scripts.
 
 ## Architecture

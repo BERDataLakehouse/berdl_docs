@@ -108,6 +108,7 @@ graph TD
     PUB_JH[jupyterhub/jupyterhub]
     PY313[python:3.13-slim]
     PY311[python:3.11-slim]
+    PY310[python:3.10-slim]
 
     %% Internal Base
     subgraph Foundation
@@ -122,6 +123,8 @@ graph TD
         SCM[spark_cluster_manager]
         JH[BERDL_JupyterHub]
         TAS[tenant_access_request_service]
+        BRM[berdl_remote]
+        SPX[spark_connect_proxy]
     end
 
     %% Dynamic Compute
@@ -140,7 +143,9 @@ graph TD
     PUB_JH -->|FROM| JH
     PY313 -->|FROM| MMS
     PY313 -->|FROM| TAS
+    PY313 -->|FROM| SPX
     PY311 -->|FROM| SCM
+    PY310 -->|FROM| BRM
     
     %% Styling
     classDef external fill:#eee,stroke:#333,stroke-dasharray: 5 5;
@@ -148,9 +153,9 @@ graph TD
     classDef service fill:#f9f,stroke:#333,stroke-width:2px;
     classDef compute fill:#ffcc00,stroke:#333,stroke-width:2px;
 
-    class JQ,PUB_JH,PY313,PY311 external;
+    class JQ,PUB_JH,PY313,PY311,PY310 external;
     class id1 internal;
-    class NB,MCP,MMS,SCM,JH,TAS service;
+    class NB,MCP,MMS,SCM,JH,TAS,BRM,SPX service;
     class DYNC compute;
 ```
 
@@ -166,6 +171,7 @@ graph TD
     SMC[cdm-spark-manager-client]
     MMSC[minio-manager-service-client]
     MCPC[datalake-mcp-server-client]
+    SRC[spark-connect-remote]
     
     %% Base Package
     subgraph Base ["spark_notebook_base"]
@@ -177,12 +183,26 @@ graph TD
         NU[berdl_notebook_utils]
     end
     
+    subgraph Extensions ["JupyterLab Extensions"]
+        ARE[berdl_access_request_extension]
+        TDB[tenant-data-browser]
+        CBA[cdm-jupyter-ai-cborg]
+    end
+    
     subgraph MCPServer ["datalake-mcp-server"]
         MCP[datalake-mcp-server]
     end
     
     subgraph JupyterHub ["BERDL_JupyterHub"]
         JH[berdl-jupyterhub]
+    end
+    
+    subgraph SparkRemote ["spark_connect_proxy"]
+        SPX[spark-connect-proxy]
+    end
+    
+    subgraph BERDLRemoteC ["berdl_remote"]
+        BRMC[berdl-remote]
     end
 
     %% Dependencies
@@ -195,12 +215,23 @@ graph TD
     
     JH -->|Dep| SMC
     
+    %% JupyterLab extensions depend on user environment
+    ARE -.->|Env| NU
+    TDB -.->|Env| NU
+    
+    %% SPX and SRC 
+    SPX -->|Uses| MCP
+    SRC -->|Connects| SPX
+    BRMC -->|Connects| MCP
+    
     %% Styling
     classDef client fill:#ffedea,stroke:#cc0000,stroke-width:1px;
     classDef pkg fill:#e1f5fe,stroke:#01579b,stroke-width:2px;
+    classDef ext fill:#e8f5e9,stroke:#2e7d32,stroke-width:2px;
     
-    class SMC,MMSC,MCPC client;
-    class PNB,NU,MCP,JH pkg;
+    class SMC,MMSC,MCPC,SRC client;
+    class PNB,NU,MCP,JH,SPX,BRMC pkg;
+    class ARE,TDB,CBA ext;
 ```
 
 ## Core Components
@@ -211,9 +242,16 @@ graph TD
 | **Spark Notebook** | User's personal workspace with Spark pre-configured. | [Spark Notebook](./services/spark_notebook.md) | [Repo](https://github.com/BERDataLakehouse/spark_notebook) |
 | **Spark Notebook Base** | Foundational Docker image with PySpark and common dependencies. | [Spark Notebook Base](./services/spark_notebook_base.md) | [Repo](https://github.com/BERDataLakehouse/spark_notebook_base) |
 | **Datalake MCP Server** | FastAPI Data API with MCP layer for AI interactions and direct queries. | [Datalake MCP Service](./services/datalake-mcp-service.md) | [Repo](https://github.com/BERDataLakehouse/datalake-mcp-server) |
+| **Datalake MCP Server Client** | Auto-generated Python client for the MCP server. | [Datalake MCP Server Client](./services/datalake-mcp-server-client.md) | [Repo](https://github.com/BERDataLakehouse/datalake-mcp-server-client) |
 | **MinIO Manager Service** | Handles dynamic credentials and IAM policies for secure data access. | [MinIO Manager Service](./services/minio-manager-service.md) | [Repo](https://github.com/BERDataLakehouse/minio_manager_service) |
+| **MinIO Manager Service Client** | Auto-generated Python client for the MinIO Manager Service. | [MinIO Manager Service Client](./services/minio_manager_service_client.md) | [Repo](https://github.com/BERDataLakehouse/minio_manager_service_client) |
 | **Spark Cluster Manager** | API for managing dynamic, personal Spark clusters on K8s (Primary for Users). | [Spark Cluster Manager](./services/spark-cluster-manager.md) | [Repo](https://github.com/BERDataLakehouse/spark_cluster_manager) |
 | **Hive Metastore** | Stores metadata for Delta Lake tables. | [Hive Metastore](./services/hive-metastore.md) | [Repo](https://github.com/BERDataLakehouse/hive_metastore) |
 | **Spark Cluster** | Spark master/worker image for static and dynamic clusters. | [Spark Cluster](./services/spark-cluster.md) | [Repo](https://github.com/BERDataLakehouse/kube_spark_manager_image) |
 | **BERDL Access Request Extension** | JupyterLab extension providing UI for tenant access requests. | [Access Request Extension](./services/berdl-access-request-extension.md) | [Repo](https://github.com/BERDataLakehouse/berdl_access_request_extension) |
-| **Tenant Access Request Service** | Self-service Slack workflow for users to request access to tenant groups. | [Tenant Access Request Service](./services/tenant-access-request-service.md) | [Repo](https://github.com/BERDataLakehouse/tenant_access_request_service) |
+| **Tenant Data Browser** | JupyterLab extension for navigating MinIO object storage visually. | [Tenant Data Browser](./services/tenant-data-browser.md) | [Repo](https://github.com/BERDataLakehouse/tenant-data-browser) |
+| **CDM Jupyter AI CBorg** | Integration module between Jupyter AI and the CBorg LLM API provider. | [Jupyter AI CBorg Setup](./services/cdm-jupyter-ai-cborg.md) | [Repo](https://github.com/BERDataLakehouse/cdm-jupyter-ai-cborg) |
+| **Tenant Access Request Service** | Slack workflow for users to request access to tenant groups. | [Tenant Access Request Service](./services/tenant-access-request-service.md) | [Repo](https://github.com/BERDataLakehouse/tenant_access_request_service) |
+| **Spark Connect Proxy** | Multi-user authenticating layer for Spark Connect requests. | [Spark Connect Proxy](./services/spark_connect_proxy.md) | [Repo](https://github.com/BERDataLakehouse/spark_connect_proxy) |
+| **Spark Connect Remote Client** | Python library that interfaces with Spark Connect Proxy. | [Spark Connect Remote Client](./services/spark_connect_remote.md) | [Repo](https://github.com/BERDataLakehouse/spark_connect_remote) |
+| **BERDL Remote CLI** | Local development toolkit for connecting to BERDL securely. | [BERDL Remote CLI](./services/berdl-remote.md) | [Repo](https://github.com/BERDataLakehouse/berdl_remote) |

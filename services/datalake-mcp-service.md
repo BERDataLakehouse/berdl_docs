@@ -46,8 +46,16 @@ graph LR
 | POST | `/delta/databases/structure` | Get the complete structure of all databases with optional schemas. |
 | POST | `/delta/tables/count` | Get row count for a Delta table. |
 | POST | `/delta/tables/sample` | Retrieve a sample of rows from a Delta table. |
-| POST | `/delta/tables/query` | Execute a raw SQL query against a Delta table. |
+| POST | `/delta/tables/query` | Execute a raw SQL query against a Delta table (Deprecated, use async endpoint). |
 | POST | `/delta/tables/select` | Execute a structured SELECT query with JOINs, aggregations, pagination. |
+
+### Async Query Operations (`/delta/tables/query/async/*`)
+| Method | Endpoint | Description |
+|--------|----------|-------------|
+| POST | `/delta/tables/query/async/submit` | Submit a long-running Spark SQL query for background execution. |
+| GET | `/delta/tables/query/async/{job_id}/status` | Check the completion status of an async query. |
+| GET | `/delta/tables/query/async/{job_id}/results` | Retrieve the results of a completed async query. |
+| GET | `/delta/tables/query/async/jobs` | List all active or recent query jobs for the current user. |
 
 ### Health (`/health`)
 | Method | Endpoint | Description |

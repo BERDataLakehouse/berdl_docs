@@ -26,7 +26,7 @@ graph TD
     User[User in JupyterHub] -->|request_tenant_access| TAS[Tenant Access Request Service]
     TAS -->|Send notification| Slack[Slack Channel]
     Admin[Admin] -->|Click Approve| Slack
-    Slack -->|Modal + Token| TAS
+    Slack -->|Approve/Deny Callback| TAS
     TAS -->|Add user to group| MMS[MinIO Manager Service]
     TAS -->|Update message| Slack
 ```
@@ -87,7 +87,7 @@ See [BERDL Access Request Extension](./berdl-access-request-extension.md) for de
    [Approve] [Deny]
    ```
 
-3. **Admin clicks Approve** → Modal prompts for KBase token → User is added to group.
+3. **Admin clicks Approve** → Request is approved → User is added to group.
 
 4. **User verifies access**:
    ```python

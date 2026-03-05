@@ -9,13 +9,16 @@
 
 ## Overview
 
-The BERDL Access Request Extension is a JupyterLab extension that adds a "Request Tenant Access" button to notebook toolbars. It provides a user-friendly modal for requesting access to tenant groups without needing to write Python code.
+The BERDL Access Request Extension is a JupyterLab extension that adds custom capabilities to the notebook UI:
+1. **Tenant Access Requests:** A "Request Tenant Access" button provides a user-friendly modal for requesting access to tenant groups without needing to write Python code.
+2. **Credential Export:** A "Get Credentials" button provides an easy way to export KBase authentication credentials specifically formatted for use with the `berdl-remote` CLI tool.
 
 ## Key Features
 
-- **Toolbar Button**: One-click access to the request form from any notebook.
-- **Modal Dialog**: Clean UI for selecting groups and permission levels.
+- **Toolbar Buttons**: One-click access to the request form and credential exporter from any notebook.
+- **Access Modal Dialog**: Clean UI for selecting groups and permission levels.
 - **Backend Integration**: Uses `berdl_notebook_utils` to communicate with the Tenant Access Request Service.
+- **Config Generation**: Generates and allows download of a `remote-config.yaml` file for local development workflows.
 
 ## Architecture
 
@@ -45,7 +48,7 @@ The request is sent to the Tenant Access Request Service, which posts to Slack f
 |-----------|-------------|
 | **Frontend** | TypeScript/React extension for JupyterLab 4.x |
 | **Backend** | Python server extension using `jupyter_server` |
-| **API Endpoints** | `/api/access-request/groups`, `/api/access-request/submit` |
+| **API Endpoints** | `/api/access-request/groups`, `/api/access-request/submit`, `/api/access-request/credentials/info`, `/api/access-request/credentials/config` |
 
 ## API Endpoints
 
