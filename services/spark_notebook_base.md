@@ -19,7 +19,7 @@ This image provides the core runtime environment for `spark_notebook` and dynami
 
 - **Centralized Dependencies**: All client libraries (MCP, MinIO Manager, Spark Manager) are pre-installed here.
 - **Multi-stage Build**: Uses Gradle to download JARs in a builder stage, keeping the final image lean.
-- **`uv` Package Management**: Fast, reliable Python dependency resolution.
+- **`uv` Package Management**: Fast, reliable Python dependency resolution. The Python dependencies are bundled in `pyproject.toml` as the package `berdl-notebook-python-base`. Other repositories can consume these common dependencies by installing `git+https://github.com/BERDataLakehouse/spark_notebook_base.git`.
 
 ## Build Process
 

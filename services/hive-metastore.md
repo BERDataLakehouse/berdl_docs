@@ -34,3 +34,13 @@ graph TD
   - `s3a://cdm-lake/users-sql-warehouse/` - User personal SQL warehouses
   - `s3a://cdm-lake/tenants-sql-warehouse/` - Tenant/group SQL warehouses
 - **Used By**: `spark_notebook`, `datalake-mcp-server`, Spark clusters.
+
+## Configuration
+
+The Metastore connects to both PostgreSQL (for metadata) and MinIO (for default warehouse paths). Key environment variables include:
+
+| Variable | Description |
+|----------|-------------|
+| `POSTGRES_HOST`/`PORT`/`DB`/`USER`/`PASSWORD` | Database connection details |
+| `DELTALAKE_WAREHOUSE_DIR` | Base directory in S3 for the default Hive warehouse |
+| `S3_ENDPOINT`/`ACCESS_KEY`/`SECRET_KEY` | Credentials for S3-compatible storage |

@@ -9,17 +9,27 @@
 
 ## Overview
 
-A REST API service that manages **dedicated (dynamic) Spark clusters** for users within Kubernetes.
+A REST API service that manages **dedicated (dynamic) Spark clusters** for users within Kubernetes. This service acts as an abstraction layer between user actions and the underlying Kubernetes API.
 
-> **Role**: This is the **primary** way for users to run distributed Spark jobs. Instead of sharing the static cluster, users spawn their own isolated clusters to ensure resource guarantees and isolation.
+> **Role**: This is the **primary** way for users to run distributed Spark jobs. Instead of sharing a static cluster, users spawn their own isolated clusters to ensure guaranteed compute resources and strict data isolation.
 
-> **Note**: This is distinct from the shared "Spark Cluster" documented [here](./spark-cluster.md), which is a single static cluster. The Spark Cluster Manager allows *dynamic* creation of personal clusters.
+> **Note**: This architecture separates the *management* of the cluster (done by this API) from the *container image* running the cluster (the `kube_spark_manager_image` repository).
 
 ## Key Features
 
-- **Dynamic Clusters**: Users can create/delete their own Spark clusters via API.
-- **REST API**: `POST /clusters`, `GET /clusters`, `DELETE /clusters`.
-- **Auth**: Secured via KBase authentication.
+- **Dynamic Provisioning**: Creates and tears down dedicated Spark Master and Worker pods per user.
+- **REST API**: Simple JSON endpoints for cluster lifecycle management.
+- **KBase Auth**: Secured via KBase authentication tokens.
+- **Automatic Cleanup**: Ensures resources are reaped when clusters are deleted.
+
+## API Endpoints
+
+| Method | Endpoint | Description |
+|--------|----------|-------------|
+| GET | `/health` | Check the health status of the service |
+| POST | `/clusters` | Creates a new Spark cluster for the authenticated user |
+| GET | `/clusters` | Get the status/connection details of an existing user cluster |
+| DELETE | `/clusters` | Deletes the Spark cluster belonging to the authenticated user |
 
 ## Architecture
 
