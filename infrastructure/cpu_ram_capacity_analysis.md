@@ -8,7 +8,7 @@
 
 | Node | Cores | RAM | Disk | Current Assignment |
 |------|------:|----:|-----:|-------------------|
-| kworker-01 | 168 | 1024 GB | 100 TB | Ded/Staging Services |
+| kworker-01 | 168 | 1024 GB | 100 TB | Dev/Staging Services |
 | kworker-02 | 168 | 1024 GB | 100 TB | Prod Services |
 | kworker-03 | 168 | 1024 GB | 100 TB | **All user notebook pods** |
 | kworker-05 – 10 | 168 each | 1024 GB each | 100 TB each | Per-user Spark clusters (master + workers) |
