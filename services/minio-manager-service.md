@@ -9,15 +9,15 @@
 
 ## Overview
 
-The MinIO Manager Service is the central governance authority for the BERDL platform. It programmatically provisions MinIO S3 storage policies and Apache Polaris (Iceberg REST) catalogs, providing dynamic credential management and unified access control for Spark applications.
+The MinIO Manager Service is the central governance authority for the BERDL platform. It programmatically provisions MinIO S3 storage policies, providing dynamic credential management and unified access control for Spark applications.
 
 ## Key Features
 
-- **Dynamic Credentials**: Issues short-lived MinIO credentials and Polaris principals for users and Spark sessions.
-- **Policy Enforcement**: Automatically updates IAM policies and Polaris RBAC catalog roles based on group membership.
-- **JupyterHub Integration**: Triggered by JupyterHub upon login to initialize user policies, create personal Iceberg catalogs, and fetch credentials for spawned pods.
-- **Dataset Isolation**: Provisions isolated S3 workspaces and Iceberg catalogs per user (`user_{username}`) and per tenant (`tenant_{groupname}`).
-- **Data Sharing**: Manages path-level and catalog-level access controls for sharing data securely.
+- **Dynamic Credentials**: Issues short-lived MinIO credentials for users and Spark sessions.
+- **Policy Enforcement**: Automatically updates IAM policies based on group membership.
+- **JupyterHub Integration**: Triggered by JupyterHub upon login to initialize user policies and fetch credentials for spawned pods.
+- **Dataset Isolation**: Provisions isolated S3 workspaces per user (`user_{username}`) and per tenant (`tenant_{groupname}`).
+- **Data Sharing**: Manages path-level access controls for sharing data securely.
 
 ## Architecture
 
@@ -25,11 +25,9 @@ The MinIO Manager Service is the central governance authority for the BERDL plat
 graph TD
     JH[JupyterHub] -->|Request Creds| MMS[MinIO Manager Service]
     MMS -->|Manage Users/Policies| MIN[MinIO Server]
-    MMS -->|Manage Catalogs/Roles| POL[Apache Polaris]
     MMS -->|Locking| REDIS[Redis]
-    
+
     User[User/Spark] -->|Use S3 Creds| MIN
-    User -->|Use Iceberg REST| POL
 ```
 
 ## API Endpoints

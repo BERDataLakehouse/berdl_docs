@@ -32,7 +32,7 @@ graph TD
 - **PostgreSQL**: Backend database for metadata storage.
 - **MinIO Warehouses**:
   - `s3a://cdm-lake/users-sql-warehouse/` - User personal SQL warehouses
-  - `s3a://cdm-lake/tenants-sql-warehouse/` - Tenant/group SQL warehouses
+  - `s3a://cdm-lake/tenant-sql-warehouse/` - Tenant/group SQL warehouses
 - **Used By**: `spark_notebook`, `datalake-mcp-server`, Spark clusters.
 
 ## Configuration

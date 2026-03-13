@@ -50,7 +50,7 @@ graph LR
 
     subgraph Data ["Data & Metadata"]
         direction TB
-        POL[Apache Polaris]
+        HM[Hive Metastore]
         S3[MinIO Storage]
     end
 
@@ -85,19 +85,18 @@ graph LR
     TAS -->|"Add to Group"| MMS
     MCP -->|"Direct/Fallback"| SM
     MCP -->|"Via Hub"| DYNC
-    MMS -->|"Manage Catalogs"| POL
     MMS -->|"Manage Policies"| S3
-    
+
     %% Data Access
     NB -->|"S3"| S3
-    NB -->|"REST"| POL
+    NB -->|"Metadata"| HM
     MCP -->|"S3"| S3
-    MCP -->|"REST"| POL
+    MCP -->|"Metadata"| HM
     DYNC -->|"Process"| S3
     SM -->|"Process"| S3
-    
+
     %% Infrastructure Backends
-    POL -->|"Store"| PG
+    HM -->|"Store"| PG
     S3 -.->|"Disk"| Disk
 
     %% Styling
@@ -107,7 +106,7 @@ graph LR
     classDef external fill:#e8e8e8,stroke:#333,stroke-width:1px;
     
     class JH,NB,MMS,SCM,MCP,TAS,SPX service;
-    class S3,POL,PG,Disk storage;
+    class S3,HM,PG,Disk storage;
     class DYNC,SM compute;
     class Slack,Remote,SPXClient external;
 ```
