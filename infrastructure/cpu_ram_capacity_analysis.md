@@ -220,9 +220,9 @@ A shared Trino cluster on **kworker-19** provides interactive SQL query capabili
 
 | Component | Cores | Memory | Heap (-Xmx) | Replicas | Purpose |
 |-----------|------:|-------:|------------:|---------:|---------|
-| Coordinator | 8 | 32 GiB | 24G | 1 | Query planning, scheduling, Web UI |
+| Coordinator | 4 | 32 GiB | 24G | 1 | Query planning, scheduling, Web UI |
 | Workers | 40 each | 240 GiB each | 192G | 4 | Query execution |
-| **Total** | **168** | **992 GiB** | | **5 pods** | |
+| **Total** | **164** | **992 GiB** | | **5 pods** | |
 
 > The coordinator does not execute queries (`node-scheduler.include-coordinator=false`). All query execution runs on the 4 dedicated workers.
 
@@ -230,7 +230,7 @@ A shared Trino cluster on **kworker-19** provides interactive SQL query capabili
 
 | Resource | Total (kworker-19) | Used | Utilization |
 |----------|-------------------:|-----:|------------:|
-| CPU | 168 cores | 168 cores | **100%** |
+| CPU | 168 cores | 164 cores | **97.6%** |
 | RAM | 1024 GB | 992 GiB | **96.9%** |
 
 ### 6.3 Memory Limits
@@ -238,9 +238,8 @@ A shared Trino cluster on **kworker-19** provides interactive SQL query capabili
 | Setting | Value | Description |
 |---------|-------|-------------|
 | `query.max-memory` | 100 GB | Max memory a single query can use across all workers |
-| `query.max-memory-per-node` | 40 GB | Max memory a single query can use on one worker |
 
-Trino's query memory pool per worker is ~80% of heap = ~154 GB. With `query.max-memory-per-node=40GB`, a single query uses at most 26% of a worker's pool, leaving room for multiple concurrent queries.
+Trino automatically manages per-node memory allocation. The query memory pool per worker is ~80% of heap = ~154 GB.
 
 ### 6.4 Concurrency (Resource Groups)
 
