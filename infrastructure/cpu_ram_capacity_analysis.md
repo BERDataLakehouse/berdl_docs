@@ -16,7 +16,8 @@
 | kworker-12 – 13 | 168 each | 1024 GB each | 100 TB each | **Other workloads** |
 | kworker-14 – 17 | 168 each | 1024 GB each | 100 TB each | Per-user Spark clusters (master + workers) |
 | kworker-18 | 168 | 1024 GB | 100 TB | Shared Spark cluster (workers) |
-| kworker-19 – 20 | 168 each | 1024 GB each | 100 TB each | **Other workloads** |
+| kworker-19 | 168 | 1024 GB | 100 TB | **Trino cluster** (coordinator + 4 workers) |
+| kworker-20 | 168 | 1024 GB | 100 TB | **Other workloads** |
 
 **Spark cluster pool: 10 nodes** (kworker-05–10, kworker-14–17) — **1,680 cores, 10,240 GB RAM total**
 
@@ -210,3 +211,51 @@ The [datalake-mcp-server](https://github.com/BERDataLakehouse/datalake-mcp-serve
 | RAM | 1,920 GiB | 2,000 GiB | **96%** |
 
 ---
+
+## 6. Trino Query Engine (kworker-19)
+
+A shared Trino cluster on **kworker-19** provides interactive SQL query capabilities for all users. Unlike per-user Spark clusters, Trino uses a single shared cluster with fair scheduling via resource groups.
+
+### 6.1 Cluster Configuration
+
+| Component | Cores | Memory | Heap (-Xmx) | Replicas | Purpose |
+|-----------|------:|-------:|------------:|---------:|---------|
+| Coordinator | 8 | 32 GiB | 24G | 1 | Query planning, scheduling, Web UI |
+| Workers | 40 each | 240 GiB each | 192G | 4 | Query execution |
+| **Total** | **168** | **992 GiB** | | **5 pods** | |
+
+> The coordinator does not execute queries (`node-scheduler.include-coordinator=false`). All query execution runs on the 4 dedicated workers.
+
+### 6.2 Resource Utilization
+
+| Resource | Total (kworker-19) | Used | Utilization |
+|----------|-------------------:|-----:|------------:|
+| CPU | 168 cores | 168 cores | **100%** |
+| RAM | 1024 GB | 992 GiB | **96.9%** |
+
+### 6.3 Memory Limits
+
+| Setting | Value | Description |
+|---------|-------|-------------|
+| `query.max-memory` | 100 GB | Max memory a single query can use across all workers |
+| `query.max-memory-per-node` | 40 GB | Max memory a single query can use on one worker |
+
+Trino's query memory pool per worker is ~80% of heap = ~154 GB. With `query.max-memory-per-node=40GB`, a single query uses at most 26% of a worker's pool, leaving room for multiple concurrent queries.
+
+### 6.4 Concurrency (Resource Groups)
+
+| Setting | Value | Description |
+|---------|-------|-------------|
+| Global concurrent queries | 50 | Max queries running across all users |
+| Global queued | 500 | Max queries waiting in queue |
+| Per-user concurrent queries | 10 | Max running queries per user |
+| Per-user queued | 50 | Max queued queries per user |
+| Per-user soft memory limit | 20% | One user can use at most 20% of cluster memory |
+| Scheduling policy | weighted_fair | Active users share capacity equally |
+
+**Concurrent query capacity estimate:**
+- At 40 GB per query max: 960 GB pool / 40 GB = 24 large queries concurrently
+- At 10 GB per query avg: 960 GB pool / 10 GB = 96 typical queries concurrently
+- CPU-bound: 160 worker cores / 4 cores per query avg = 40 queries concurrently
+
+> **Result: kworker-19 can handle ~40–96 concurrent queries** depending on query complexity. The resource group limits (50 global, 10 per-user) keep this within safe bounds.
