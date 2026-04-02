@@ -122,7 +122,6 @@ graph TD
     PUB_JH[jupyterhub/jupyterhub]
     PY313[python:3.13-slim]
     PY312[python:3.12-slim]
-    PY310[python:3.10-slim]
 
     %% Internal Base
     subgraph Foundation
@@ -159,7 +158,7 @@ graph TD
     PY313 -->|FROM| TAS
     PY313 -->|FROM| SPX
     PY312 -->|FROM| SCM
-    PY310 -->|FROM| BRM
+    PY313 -->|FROM| BRM
     
     %% Styling
     classDef external fill:#eee,stroke:#333,stroke-dasharray: 5 5;
@@ -167,7 +166,7 @@ graph TD
     classDef service fill:#f9f,stroke:#333,stroke-width:2px;
     classDef compute fill:#ffcc00,stroke:#333,stroke-width:2px;
 
-    class JQ,PUB_JH,PY313,PY312,PY310 external;
+    class JQ,PUB_JH,PY313,PY312 external;
     class id1 internal;
     class NB,MCP,MMS,SCM,JH,TAS,BRM,SPX service;
     class DYNC compute;

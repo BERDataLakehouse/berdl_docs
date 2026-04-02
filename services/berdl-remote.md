@@ -1,6 +1,10 @@
 # BERDL Remote
 
-**Repository:** [berdl_remote](https://github.com/BERDataLakehouse/berdl_remote)
+| | |
+|---|---|
+| **GitHub Repo** | [berdl_remote](https://github.com/BERDataLakehouse/berdl_remote) |
+| **Python** | 3.13 |
+| **Package Manager** | uv |
 
 `berdl-remote` is a CLI tool designed for remotely executing notebooks and shell commands on a user's BERDL JupyterHub environment directly from their local machine. This allows seamless integration of BERDL's scalable cloud compute resources into local workflows and automated scripts.
 
