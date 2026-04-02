@@ -6,6 +6,9 @@
 |---|---|
 | **Docker Image** | `ghcr.io/berdatalakehouse/datalake-mcp-server:main` |
 | **GitHub Repo** | [datalake-mcp-server](https://github.com/BERDataLakehouse/datalake-mcp-server) |
+| **Python** | 3.13 |
+| **Framework** | FastAPI 0.135 / Uvicorn / MCP 1.26 |
+| **Package Manager** | uv |
 
 ## Overview
 
@@ -19,9 +22,9 @@ This design ensures that while AI agents can drive operations, users and other s
 
 - **Natural Language to SQL**: Translates user prompts into Spark SQL queries.
 - **Direct Data API**: Exposes standard REST endpoints (FastAPI) for direct programmatic access to data, independent of the MCP layer.
-- **Dual Cluster Mode**:
-    - **Dynamic**: When accessed via proper auth context (JupyterHub), uses the user's personal dynamic cluster.
-    - **Static**: When accessed directly or without user context, falls back to the static shared cluster.
+- **Multi-Engine Query Support**:
+    - **Spark Connect**: Default engine — connects to user's dynamic Spark cluster or shared static cluster.
+    - **Trino**: Lightweight HTTP-based engine for fast, concurrent queries. Set via `QUERY_ENGINE=trino` or per-request `engine` field.
 - **Delta Lake Integration**: Reads directly from Delta tables in MinIO.
 
 ## Architecture
@@ -70,6 +73,7 @@ graph LR
 ## Integrations
 
 - **Spark Connect**: Connects to user's dynamic cluster or falls back to shared static cluster.
+- **Trino**: Alternative query engine via DB-API HTTP connections. Per-request or global selection.
 - **Hive Metastore**: `thrift://hive-metastore:9083` - Table metadata.
 - **MinIO**: `http://minio:9002` - Underlying S3 storage.
 - **Redis**: Caching layer for improved performance.
