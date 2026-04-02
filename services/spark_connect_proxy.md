@@ -1,6 +1,11 @@
 # Spark Connect Proxy
 
-**Repository:** [spark_connect_proxy](https://github.com/BERDataLakehouse/spark_connect_proxy)
+| | |
+|---|---|
+| **Docker Image** | `ghcr.io/berdatalakehouse/spark_connect_proxy:main` |
+| **GitHub Repo** | [spark_connect_proxy](https://github.com/BERDataLakehouse/spark_connect_proxy) |
+| **Python** | 3.13 |
+| **Package Manager** | uv |
 
 The `spark-connect-proxy` service acts as a centralized, multi-user ingress gateway for routing external PySpark connections securely into individual user environments on BERDL JupyterHub.
 

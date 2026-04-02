@@ -1,6 +1,10 @@
 # Datalake MCP Server Client
 
-**Repository:** [datalake-mcp-server-client](https://github.com/BERDataLakehouse/datalake-mcp-server-client)
+| | |
+|---|---|
+| **GitHub Repo** | [datalake-mcp-server-client](https://github.com/BERDataLakehouse/datalake-mcp-server-client) |
+| **Python** | 3.13 (auto-generated client) |
+| **Package Manager** | uv |
 
 The `datalake-mcp-server-client` is an auto-generated Python client library for interacting with the `datalake-mcp-server` APIs. 
 

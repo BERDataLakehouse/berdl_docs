@@ -122,7 +122,6 @@ graph TD
     PUB_JH[jupyterhub/jupyterhub]
     PY313[python:3.13-slim]
     PY312[python:3.12-slim]
-    PY310[python:3.10-slim]
 
     %% Internal Base
     subgraph Foundation
@@ -137,7 +136,6 @@ graph TD
         SCM[spark_cluster_manager]
         JH[BERDL_JupyterHub]
         TAS[tenant_access_request_service]
-        BRM[berdl_remote]
         SPX[spark_connect_proxy]
     end
 
@@ -159,7 +157,6 @@ graph TD
     PY313 -->|FROM| TAS
     PY313 -->|FROM| SPX
     PY312 -->|FROM| SCM
-    PY310 -->|FROM| BRM
     
     %% Styling
     classDef external fill:#eee,stroke:#333,stroke-dasharray: 5 5;
@@ -167,9 +164,9 @@ graph TD
     classDef service fill:#f9f,stroke:#333,stroke-width:2px;
     classDef compute fill:#ffcc00,stroke:#333,stroke-width:2px;
 
-    class JQ,PUB_JH,PY313,PY312,PY310 external;
+    class JQ,PUB_JH,PY313,PY312 external;
     class id1 internal;
-    class NB,MCP,MMS,SCM,JH,TAS,BRM,SPX service;
+    class NB,MCP,MMS,SCM,JH,TAS,SPX service;
     class DYNC compute;
 ```
 
@@ -238,20 +235,26 @@ graph TD
 
 | Service | Description | Documentation | Repository |
 |---------|-------------|---------------|------------|
+| | **Platform Entry & User Environment** | | |
 | **JupyterHub** | Manages user sessions and spawns individual notebook servers. | [BERDL JupyterHub](./services/berdl-jupyterhub.md) | [Repo](https://github.com/BERDataLakehouse/BERDL_JupyterHub) |
 | **Spark Notebook** | User's personal workspace with Spark pre-configured. | [Spark Notebook](./services/spark_notebook.md) | [Repo](https://github.com/BERDataLakehouse/spark_notebook) |
 | **Spark Notebook Base** | Foundational Docker image with PySpark and common dependencies. | [Spark Notebook Base](./services/spark_notebook_base.md) | [Repo](https://github.com/BERDataLakehouse/spark_notebook_base) |
+| | **Core Backend Services** | | |
+| **MinIO Manager Service** | Central governance authority for credentials, tenants, and IAM policies. | [MinIO Manager Service](./services/minio-manager-service.md) | [Repo](https://github.com/BERDataLakehouse/minio_manager_service) |
 | **Datalake MCP Server** | FastAPI Data API with MCP layer for AI interactions and direct queries. | [Datalake MCP Service](./services/datalake-mcp-service.md) | [Repo](https://github.com/BERDataLakehouse/datalake-mcp-server) |
-| **Datalake MCP Server Client** | Auto-generated Python client for the MCP server. | [Datalake MCP Server Client](./services/datalake-mcp-server-client.md) | [Repo](https://github.com/BERDataLakehouse/datalake-mcp-server-client) |
-| **MinIO Manager Service** | Handles dynamic credentials and IAM policies for secure data access. | [MinIO Manager Service](./services/minio-manager-service.md) | [Repo](https://github.com/BERDataLakehouse/minio_manager_service) |
-| **MinIO Manager Service Client** | Auto-generated Python client for the MinIO Manager Service. | [MinIO Manager Service Client](./services/minio_manager_service_client.md) | [Repo](https://github.com/BERDataLakehouse/minio_manager_service_client) |
-| **Spark Cluster Manager** | API for managing dynamic, personal Spark clusters on K8s (Primary for Users). | [Spark Cluster Manager](./services/spark-cluster-manager.md) | [Repo](https://github.com/BERDataLakehouse/spark_cluster_manager) |
-| **Hive Metastore** | Stores metadata for Delta Lake tables. | [Hive Metastore](./services/hive-metastore.md) | [Repo](https://github.com/BERDataLakehouse/hive_metastore) |
-| **Spark Cluster** | Spark master/worker image for static and dynamic clusters. | [Spark Cluster](./services/spark-cluster.md) | [Repo](https://github.com/BERDataLakehouse/kube_spark_manager_image) |
-| **BERDL Access Request Extension** | JupyterLab extension providing UI for tenant access requests. | [Access Request Extension](./services/berdl-access-request-extension.md) | [Repo](https://github.com/BERDataLakehouse/berdl_access_request_extension) |
-| **Tenant Data Browser** | JupyterLab extension for navigating MinIO object storage visually. | [Tenant Data Browser](./services/tenant-data-browser.md) | [Repo](https://github.com/BERDataLakehouse/tenant-data-browser) |
-| **CDM Jupyter AI CBorg** | Integration module between Jupyter AI and the CBorg LLM API provider. | [Jupyter AI CBorg Setup](./services/cdm-jupyter-ai-cborg.md) | [Repo](https://github.com/BERDataLakehouse/cdm-jupyter-ai-cborg) |
+| **Spark Cluster Manager** | API for managing dynamic, personal Spark clusters on K8s. | [Spark Cluster Manager](./services/spark-cluster-manager.md) | [Repo](https://github.com/BERDataLakehouse/spark_cluster_manager) |
 | **Tenant Access Request Service** | Slack workflow for users to request access to tenant groups. | [Tenant Access Request Service](./services/tenant-access-request-service.md) | [Repo](https://github.com/BERDataLakehouse/tenant_access_request_service) |
+| **Hive Metastore** | Central metadata catalog for Delta Lake tables. | [Hive Metastore](./services/hive-metastore.md) | [Repo](https://github.com/BERDataLakehouse/hive_metastore) |
+| **Spark Cluster** | Spark master/worker image for static and dynamic clusters. | [Spark Cluster](./services/spark-cluster.md) | [Repo](https://github.com/BERDataLakehouse/kube_spark_manager_image) |
+| | **Data Tools & Frameworks** | | |
+| **Data Lakehouse Ingest** | Config-driven PySpark ingestion framework for Bronze→Silver ETL. | [Data Lakehouse Ingest](./services/data-lakehouse-ingest.md) | [Repo](https://github.com/kbase/data-lakehouse-ingest) |
 | **Spark Connect Proxy** | Multi-user authenticating layer for Spark Connect requests. | [Spark Connect Proxy](./services/spark_connect_proxy.md) | [Repo](https://github.com/BERDataLakehouse/spark_connect_proxy) |
 | **Spark Connect Remote Client** | Python library that interfaces with Spark Connect Proxy. | [Spark Connect Remote Client](./services/spark_connect_remote.md) | [Repo](https://github.com/BERDataLakehouse/spark_connect_remote) |
 | **BERDL Remote CLI** | Local development toolkit for connecting to BERDL securely. | [BERDL Remote CLI](./services/berdl-remote.md) | [Repo](https://github.com/BERDataLakehouse/berdl_remote) |
+| | **JupyterLab Extensions** | | |
+| **BERDL Access Request Extension** | UI for tenant access requests. | [Access Request Extension](./services/berdl-access-request-extension.md) | [Repo](https://github.com/BERDataLakehouse/berdl_access_request_extension) |
+| **Tenant Data Browser** | Visual navigation of MinIO object storage. | [Tenant Data Browser](./services/tenant-data-browser.md) | [Repo](https://github.com/BERDataLakehouse/tenant-data-browser) |
+| **CDM Jupyter AI CBorg** | Integration between Jupyter AI and the CBorg LLM provider. | [Jupyter AI CBorg Setup](./services/cdm-jupyter-ai-cborg.md) | [Repo](https://github.com/BERDataLakehouse/cdm-jupyter-ai-cborg) |
+| | **Generated Client Libraries** | | |
+| **MinIO Manager Service Client** | Auto-generated Python client for the MinIO Manager Service. | [MinIO Manager Service Client](./services/minio_manager_service_client.md) | [Repo](https://github.com/BERDataLakehouse/minio_manager_service_client) |
+| **Datalake MCP Server Client** | Auto-generated Python client for the MCP server. | [Datalake MCP Server Client](./services/datalake-mcp-server-client.md) | [Repo](https://github.com/BERDataLakehouse/datalake-mcp-server-client) |
