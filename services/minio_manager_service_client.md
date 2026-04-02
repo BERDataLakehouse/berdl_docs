@@ -1,6 +1,10 @@
 # MinIO Manager Service Client
 
-**Repository:** [minio_manager_service_client](https://github.com/BERDataLakehouse/minio_manager_service_client)
+| | |
+|---|---|
+| **GitHub Repo** | [minio_manager_service_client](https://github.com/BERDataLakehouse/minio_manager_service_client) |
+| **Python** | 3.13 (auto-generated client) |
+| **Package Manager** | uv |
 
 The `minio_manager_service_client` (also known functionally as the Governance Client) is an auto-generated Python client library for interacting with the `minio_manager_service` APIs. 
 

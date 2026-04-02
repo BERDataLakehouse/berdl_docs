@@ -136,7 +136,6 @@ graph TD
         SCM[spark_cluster_manager]
         JH[BERDL_JupyterHub]
         TAS[tenant_access_request_service]
-        BRM[berdl_remote]
         SPX[spark_connect_proxy]
     end
 
@@ -158,7 +157,6 @@ graph TD
     PY313 -->|FROM| TAS
     PY313 -->|FROM| SPX
     PY312 -->|FROM| SCM
-    PY313 -->|FROM| BRM
     
     %% Styling
     classDef external fill:#eee,stroke:#333,stroke-dasharray: 5 5;
@@ -168,7 +166,7 @@ graph TD
 
     class JQ,PUB_JH,PY313,PY312 external;
     class id1 internal;
-    class NB,MCP,MMS,SCM,JH,TAS,BRM,SPX service;
+    class NB,MCP,MMS,SCM,JH,TAS,SPX service;
     class DYNC compute;
 ```
 

@@ -1,6 +1,10 @@
 # Spark Connect Remote
 
-**Repository:** [spark_connect_remote](https://github.com/BERDataLakehouse/spark_connect_remote)
+| | |
+|---|---|
+| **GitHub Repo** | [spark_connect_remote](https://github.com/BERDataLakehouse/spark_connect_remote) |
+| **Python** | 3.13 |
+| **Package Manager** | uv |
 
 The `spark_connect_remote` package is the official Python client library for connecting external scripts and tools to a user's personal Spark cluster running on the BERDL JupyterHub environment.
 
