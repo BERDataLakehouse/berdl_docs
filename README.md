@@ -121,7 +121,7 @@ graph TD
     JQ[quay.io/jupyter/pyspark-notebook]
     PUB_JH[jupyterhub/jupyterhub]
     PY313[python:3.13-slim]
-    PY311[python:3.11-slim]
+    PY312[python:3.12-slim]
     PY310[python:3.10-slim]
 
     %% Internal Base
@@ -158,7 +158,7 @@ graph TD
     PY313 -->|FROM| MMS
     PY313 -->|FROM| TAS
     PY313 -->|FROM| SPX
-    PY311 -->|FROM| SCM
+    PY312 -->|FROM| SCM
     PY310 -->|FROM| BRM
     
     %% Styling
@@ -167,7 +167,7 @@ graph TD
     classDef service fill:#f9f,stroke:#333,stroke-width:2px;
     classDef compute fill:#ffcc00,stroke:#333,stroke-width:2px;
 
-    class JQ,PUB_JH,PY313,PY311,PY310 external;
+    class JQ,PUB_JH,PY313,PY312,PY310 external;
     class id1 internal;
     class NB,MCP,MMS,SCM,JH,TAS,BRM,SPX service;
     class DYNC compute;
