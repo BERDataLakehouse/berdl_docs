@@ -251,4 +251,5 @@ graph TD
 | **Tenant Access Request Service** | Slack workflow for users to request access to tenant groups. | [Tenant Access Request Service](./services/tenant-access-request-service.md) | [Repo](https://github.com/BERDataLakehouse/tenant_access_request_service) |
 | **Spark Connect Proxy** | Multi-user authenticating layer for Spark Connect requests. | [Spark Connect Proxy](./services/spark_connect_proxy.md) | [Repo](https://github.com/BERDataLakehouse/spark_connect_proxy) |
 | **Spark Connect Remote Client** | Python library that interfaces with Spark Connect Proxy. | [Spark Connect Remote Client](./services/spark_connect_remote.md) | [Repo](https://github.com/BERDataLakehouse/spark_connect_remote) |
+| **Data Lakehouse Ingest** | Config-driven PySpark ingestion framework for Bronze→Silver ETL. | [Data Lakehouse Ingest](./services/data-lakehouse-ingest.md) | [Repo](https://github.com/kbase/data-lakehouse-ingest) |
 | **BERDL Remote CLI** | Local development toolkit for connecting to BERDL securely. | [BERDL Remote CLI](./services/berdl-remote.md) | [Repo](https://github.com/BERDataLakehouse/berdl_remote) |
