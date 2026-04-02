@@ -6,6 +6,9 @@
 |---|---|
 | **Docker Image** | `ghcr.io/berdatalakehouse/spark_cluster_manager:main` |
 | **GitHub Repo** | [spark_cluster_manager](https://github.com/BERDataLakehouse/spark_cluster_manager) |
+| **Python** | 3.12 |
+| **Framework** | FastAPI 0.135 / Uvicorn |
+| **Package Manager** | uv |
 
 ## Overview
 
@@ -20,6 +23,7 @@ A REST API service that manages **dedicated (dynamic) Spark clusters** for users
 - **Dynamic Provisioning**: Creates and tears down dedicated Spark Master and Worker pods per user.
 - **REST API**: Simple JSON endpoints for cluster lifecycle management.
 - **KBase Auth**: Secured via KBase authentication tokens.
+- **Configurable Resources**: Default worker cores, memory, and count are configurable via environment variables.
 - **Automatic Cleanup**: Ensures resources are reaped when clusters are deleted.
 
 ## API Endpoints

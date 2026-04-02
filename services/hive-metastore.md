@@ -6,6 +6,8 @@
 |---|---|
 | **Docker Image** | `ghcr.io/berdatalakehouse/hive_metastore:main` |
 | **GitHub Repo** | [hive_metastore](https://github.com/BERDataLakehouse/hive_metastore) |
+| **Base Image** | `apache/hive:4.0.0` (Java 8) |
+| **Build** | Gradle 9.0 (JDK 24 builder stage) |
 
 ## Overview
 

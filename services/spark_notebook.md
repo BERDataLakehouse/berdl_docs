@@ -7,6 +7,7 @@
 | **Docker Image** | `ghcr.io/berdatalakehouse/spark_notebook:main` |
 | **GitHub Repo** | [spark_notebook](https://github.com/BERDataLakehouse/spark_notebook) |
 | **Base Image** | [spark_notebook_base](./spark_notebook_base.md) |
+| **Python** | 3.13 (inherited from base) |
 
 ## Overview
 
@@ -16,8 +17,10 @@ The Spark Notebook is the primary user interface for the BERDL platform. It prov
 
 - **JupyterLab**: Full-featured notebook environment.
 - **Pre-configured Spark**: Ready-to-use Spark session with credentials auto-injected based on KBase/MinIO manager.
-- **AI Integration**: Includes `jupyter-ai` (with CBorg integration) for AI-assisted coding.
+- **AI Integration**: Includes `jupyter-ai` with CBorg, OpenAI, Anthropic, and Ollama providers, plus MCP tool discovery via `langchain-mcp-tools`.
 - **Tenant Access UI**: Built-in [Access Request Extension](./berdl-access-request-extension.md) for requesting data access.
+- **Trino Integration**: Direct Trino query support via `trino` Python client.
+- **Apache Iceberg**: PyIceberg 0.9.1 with S3 support for Iceberg table operations.
 - **Persistent Shell Customization**: Users can configure their shell environments persistently via `~/.custom_profile`.
 
 ## Lifecycle
