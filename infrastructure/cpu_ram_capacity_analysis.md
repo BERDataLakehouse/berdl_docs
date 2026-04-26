@@ -13,10 +13,11 @@
 | kworker-03 | 168 | 1024 GB | 100 TB | **All user notebook pods** |
 | kworker-05 – 10 | 168 each | 1024 GB each | 100 TB each | Per-user Spark clusters (master + workers) |
 | kworker-11 | 168 | 1024 GB | 100 TB | Shared Spark cluster (master + workers) |
-| kworker-12 – 13 | 168 each | 1024 GB each | 100 TB each | **Other workloads** |
+| kworker-12 | 168 | 1024 GB | 100 TB | **Trino cluster** (coordinator + 4 workers) |
+| kworker-13 | 168 | 1024 GB | 100 TB | **Other workloads** |
 | kworker-14 – 17 | 168 each | 1024 GB each | 100 TB each | Per-user Spark clusters (master + workers) |
 | kworker-18 | 168 | 1024 GB | 100 TB | Shared Spark cluster (workers) |
-| kworker-19 | 168 | 1024 GB | 100 TB | **Trino cluster** (coordinator + 4 workers) |
+| kworker-19 | 168 | 1024 GB | 100 TB | **Other workloads** |
 | kworker-20 | 168 | 1024 GB | 100 TB | **Other workloads** |
 
 **Spark cluster pool: 10 nodes** (kworker-05–10, kworker-14–17) — **1,680 cores, 10,240 GB RAM total**
@@ -212,9 +213,9 @@ The [datalake-mcp-server](https://github.com/BERDataLakehouse/datalake-mcp-serve
 
 ---
 
-## 6. Trino Query Engine (kworker-19)
+## 6. Trino Query Engine (kworker-12)
 
-A shared Trino cluster on **kworker-19** provides interactive SQL query capabilities for all users. Unlike per-user Spark clusters, Trino uses a single shared cluster with fair scheduling via resource groups.
+A shared Trino cluster on **kworker-12** provides interactive SQL query capabilities for all users. Unlike per-user Spark clusters, Trino uses a single shared cluster with fair scheduling via resource groups.
 
 ### 6.1 Cluster Configuration
 
@@ -228,7 +229,7 @@ A shared Trino cluster on **kworker-19** provides interactive SQL query capabili
 
 ### 6.2 Resource Utilization
 
-| Resource | Total (kworker-19) | Used | Utilization |
+| Resource | Total (kworker-12) | Used | Utilization |
 |----------|-------------------:|-----:|------------:|
 | CPU | 168 cores | 164 cores | **97.6%** |
 | RAM | 1024 GB | 992 GiB | **96.9%** |
@@ -257,4 +258,4 @@ Trino automatically manages per-node memory allocation. The query memory pool pe
 - At 10 GB per query avg: 960 GB pool / 10 GB = 96 typical queries concurrently
 - CPU-bound: 160 worker cores / 4 cores per query avg = 40 queries concurrently
 
-> **Result: kworker-19 can handle ~40–96 concurrent queries** depending on query complexity. The resource group limits (50 global, 10 per-user) keep this within safe bounds.
+> **Result: kworker-12 can handle ~40–96 concurrent queries** depending on query complexity. The resource group limits (50 global, 10 per-user) keep this within safe bounds.
