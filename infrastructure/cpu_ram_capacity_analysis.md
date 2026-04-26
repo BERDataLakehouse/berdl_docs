@@ -10,15 +10,15 @@
 |------|------:|----:|-----:|-------------------|
 | kworker-01 | 168 | 1024 GB | 100 TB | Dev/Staging Services |
 | kworker-02 | 168 | 1024 GB | 100 TB | Prod Services |
-| kworker-03 | 168 | 1024 GB | 100 TB | **All user notebook pods** |
+| kworker-03 | 168 | 1024 GB | 100 TB | All user notebook pods |
 | kworker-05 – 10 | 168 each | 1024 GB each | 100 TB each | Per-user Spark clusters (master + workers) |
 | kworker-11 | 168 | 1024 GB | 100 TB | Shared Spark cluster (master + workers) |
-| kworker-12 | 168 | 1024 GB | 100 TB | **Trino cluster** (coordinator + 4 workers) |
-| kworker-13 | 168 | 1024 GB | 100 TB | **Other workloads** |
+| kworker-12 | 168 | 1024 GB | 100 TB | Trino cluster (coordinator + 4 workers) |
+| kworker-13 | 168 | 1024 GB | 100 TB | Other workloads |
 | kworker-14 – 17 | 168 each | 1024 GB each | 100 TB each | Per-user Spark clusters (master + workers) |
 | kworker-18 | 168 | 1024 GB | 100 TB | Shared Spark cluster (workers) |
-| kworker-19 | 168 | 1024 GB | 100 TB | **Other workloads** |
-| kworker-20 | 168 | 1024 GB | 100 TB | **Other workloads** |
+| kworker-19 | 168 | 1024 GB | 100 TB | Other workloads |
+| kworker-20 | 168 | 1024 GB | 100 TB | Other workloads |
 
 **Spark cluster pool: 10 nodes** (kworker-05–10, kworker-14–17) — **1,680 cores, 10,240 GB RAM total**
 
