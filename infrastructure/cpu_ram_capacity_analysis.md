@@ -69,10 +69,10 @@ Two profiles are available to users. Both profiles use **identical notebook pods
 | Component | Cores | Memory |
 |-----------|------:|-------:|
 | Spark Master (×1) | 1 | 2 GiB |
-| Spark Workers (×5) | 3 each (15 total) | 20 GiB each (100 GiB total) |
-| **Per-user Spark total** | **16 cores** | **102 GiB** |
+| Spark Workers (×3) | 3 each (9 total) | 20 GiB each (60 GiB total) |
+| **Per-user Spark total** | **10 cores** | **62 GiB** |
 
-> 3 cores/worker is the sweet spot for Spark executors (balances parallelism vs GC pressure). 20 GiB/worker provides 6.7 GB/core — generous for data processing.
+> 3 cores/worker is the sweet spot for Spark executors (balances parallelism vs GC pressure). 20 GiB/worker provides 6.7 GB/core — generous for data processing. Sized so all 160 notebook users can run a Medium cluster concurrently within the 10-node pool.
 
 #### Large Spark Cluster
 
@@ -125,17 +125,17 @@ Per-user Spark clusters (managed by [spark_cluster_manager](https://github.com/B
 | Component | Cores | Memory |
 |-----------|------:|-------:|
 | Spark Master (×1) | 1 | 2 GiB |
-| Spark Workers (×5) | 3 each (15 total) | 20 GiB each (100 GiB total) |
-| **Per-user total** | **16 cores** | **102 GiB** |
+| Spark Workers (×3) | 3 each (9 total) | 20 GiB each (60 GiB total) |
+| **Per-user total** | **10 cores** | **62 GiB** |
 
 | Bottleneck | Total Pool | Per User | Max Users |
 |-----------|----------:|---------:|----------:|
-| CPU | 1,680 cores | 16 cores | **105 users** |
-| RAM | 10,240 GB | 102 GB | **100 users** |
+| CPU | 1,680 cores | 10 cores | **168 users** |
+| RAM | 10,240 GB | 62 GB | **165 users** |
 
-> **Result: 10 Spark nodes can serve up to ~100 concurrent Medium Spark clusters** (RAM is the bottleneck).
+> **Result: 10 Spark nodes can serve up to ~165 concurrent Medium Spark clusters** (RAM is the bottleneck) — enough to cover all 160 notebook users.
 >
-> At 100 users: 10,200 GiB (99.6% RAM), 1,600 cores (95.2% CPU) — both resources near full utilization.
+> At 160 users: 9,920 GiB (96.9% RAM), 1,600 cores (95.2% CPU) — both resources near full utilization.
 
 ### 3.2 Large Spark Cluster
 
@@ -158,8 +158,10 @@ Per-user Spark clusters (managed by [spark_cluster_manager](https://github.com/B
 
 | Profile | Notebook Capacity (kworker-03) | Spark Cluster Capacity (10 nodes) | Effective Limit |
 |---------|-------------------------------:|----------------------------------:|----------------:|
-| Medium | 160 users | 100 users | **100 users** (Spark-limited) |
+| Medium | 160 users | 165 users | **160 users** (notebook-limited) |
 | Large | 160 users | 25 users | **25 users** (Spark-limited) |
+
+> Medium is now sized so the Spark pool covers all 160 notebook users; kworker-03 (notebook pods) is the binding constraint and is at its ceiling (160/160 cores, 960/974 GB guaranteed — no headroom).
 
 ---
 
