@@ -2,7 +2,7 @@
 
 | | |
 |---|---|
-| **GitHub Repo** | [berdl_remote](https://github.com/BERDataLakehouse/berdl_remote) |
+| **GitHub Repo** | [berdl_remote](https://github.com/KBaseDataLakehouse/berdl_remote) |
 | **Python** | 3.13 |
 | **Package Manager** | uv |
 

@@ -2,7 +2,7 @@
 
 | | |
 |---|---|
-| **GitHub Repo** | [spark_connect_remote](https://github.com/BERDataLakehouse/spark_connect_remote) |
+| **GitHub Repo** | [spark_connect_remote](https://github.com/KBaseDataLakehouse/spark_connect_remote) |
 | **Python** | 3.13 |
 | **Package Manager** | uv |
 
@@ -21,7 +21,7 @@ It handles:
 
 ### Installing
 ```bash
-pip install "git+https://github.com/BERDataLakehouse/spark_connect_remote.git"
+pip install "git+https://github.com/KBaseDataLakehouse/spark_connect_remote.git"
 ```
 
 ### Connection Flow

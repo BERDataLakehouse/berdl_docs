@@ -4,8 +4,8 @@
 
 | | |
 |---|---|
-| **Docker Image** | `ghcr.io/berdatalakehouse/spark_cluster_manager:main` |
-| **GitHub Repo** | [spark_cluster_manager](https://github.com/BERDataLakehouse/spark_cluster_manager) |
+| **Docker Image** | `ghcr.io/kbasedatalakehouse/spark_cluster_manager:main` |
+| **GitHub Repo** | [spark_cluster_manager](https://github.com/KBaseDataLakehouse/spark_cluster_manager) |
 | **Python** | 3.12 |
 | **Framework** | FastAPI 0.135 / Uvicorn |
 | **Package Manager** | uv |

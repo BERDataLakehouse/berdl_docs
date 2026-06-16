@@ -4,8 +4,8 @@
 
 | | |
 |---|---|
-| **Docker Image** | `ghcr.io/berdatalakehouse/berdl_jupyterhub:main` |
-| **GitHub Repo** | [BERDL_JupyterHub](https://github.com/BERDataLakehouse/BERDL_JupyterHub) |
+| **Docker Image** | `ghcr.io/kbasedatalakehouse/berdl_jupyterhub:main` |
+| **GitHub Repo** | [BERDL_JupyterHub](https://github.com/KBaseDataLakehouse/BERDL_JupyterHub) |
 | **Python** | 3.10 |
 | **Package Manager** | uv |
 

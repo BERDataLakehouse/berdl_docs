@@ -5,7 +5,7 @@
 | | |
 |---|---|
 | **Docker Image** | Bundled with [spark_notebook_base](./spark_notebook_base.md) |
-| **GitHub Repo** | [berdl_access_request_extension](https://github.com/BERDataLakehouse/berdl_access_request_extension) |
+| **GitHub Repo** | [berdl_access_request_extension](https://github.com/KBaseDataLakehouse/berdl_access_request_extension) |
 
 ## Overview
 

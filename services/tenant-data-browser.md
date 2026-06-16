@@ -2,7 +2,7 @@
 
 | | |
 |---|---|
-| **GitHub Repo** | [tenant-data-browser](https://github.com/BERDataLakehouse/tenant-data-browser) |
+| **GitHub Repo** | [tenant-data-browser](https://github.com/KBaseDataLakehouse/tenant-data-browser) |
 | **Python** | >=3.10 (JupyterLab extension) |
 
 The `tenant_data_browser` is a custom JupyterLab extension developed specifically for the BERDL JupyterHub environment.

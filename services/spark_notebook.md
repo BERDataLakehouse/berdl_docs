@@ -4,8 +4,8 @@
 
 | | |
 |---|---|
-| **Docker Image** | `ghcr.io/berdatalakehouse/spark_notebook:main` |
-| **GitHub Repo** | [spark_notebook](https://github.com/BERDataLakehouse/spark_notebook) |
+| **Docker Image** | `ghcr.io/kbasedatalakehouse/spark_notebook:main` |
+| **GitHub Repo** | [spark_notebook](https://github.com/KBaseDataLakehouse/spark_notebook) |
 | **Base Image** | [spark_notebook_base](./spark_notebook_base.md) |
 | **Python** | 3.13 (inherited from base) |
 

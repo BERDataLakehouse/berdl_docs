@@ -24,7 +24,7 @@
 
 ### 1.2 User Workload Components
 
-Each user session spawns **three components** across two node groups (managed by [BERDL_JupyterHub](https://github.com/BERDataLakehouse/BERDL_JupyterHub)):
+Each user session spawns **three components** across two node groups (managed by [BERDL_JupyterHub](https://github.com/KBaseDataLakehouse/BERDL_JupyterHub)):
 
 ```
 ┌──────────────────────────────────────────────────────────────┐
@@ -56,7 +56,7 @@ Each user session spawns **three components** across two node groups (managed by
 
 Two profiles are available to users. Both profiles use **identical notebook pods** — the differentiation is entirely in the Spark cluster size.
 
-#### Notebook Pod (both profiles) — [spark_notebook](https://github.com/BERDataLakehouse/spark_notebook)
+#### Notebook Pod (both profiles) — [spark_notebook](https://github.com/KBaseDataLakehouse/spark_notebook)
 
 | Component | CPU (guarantee) | Memory (limit) | Memory (guarantee) |
 |-----------|----------------:|---------------:|-------------------:|
@@ -116,7 +116,7 @@ Two profiles are available to users. Both profiles use **identical notebook pods
 
 ## 3. Per-User Spark Cluster Capacity (kworker-05–10, 14–17)
 
-Per-user Spark clusters (managed by [spark_cluster_manager](https://github.com/BERDataLakehouse/spark_cluster_manager)) run on **10 dedicated nodes** (kworker-05 through kworker-10, kworker-14 through kworker-17). Each node has 168 cores and 1024 GB RAM.
+Per-user Spark clusters (managed by [spark_cluster_manager](https://github.com/KBaseDataLakehouse/spark_cluster_manager)) run on **10 dedicated nodes** (kworker-05 through kworker-10, kworker-14 through kworker-17). Each node has 168 cores and 1024 GB RAM.
 
 **Total Spark pool: 1,680 cores, 10,240 GB RAM**
 
@@ -190,7 +190,7 @@ A shared Spark cluster spans **2 nodes** for multi-tenant workloads (e.g., data 
 
 ### 5.3 Data API Executor Configuration
 
-The [datalake-mcp-server](https://github.com/BERDataLakehouse/datalake-mcp-server) (data API) connects to the shared cluster. Each data API Spark session requests:
+The [datalake-mcp-server](https://github.com/KBaseDataLakehouse/datalake-mcp-server) (data API) connects to the shared cluster. Each data API Spark session requests:
 
 | Setting | Value | Description |
 |---------|-------|-------------|
