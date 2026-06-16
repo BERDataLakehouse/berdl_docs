@@ -4,8 +4,8 @@
 
 | | |
 |---|---|
-| **Docker Image** | `ghcr.io/berdatalakehouse/datalake-mcp-server:main` |
-| **GitHub Repo** | [datalake-mcp-server](https://github.com/BERDataLakehouse/datalake-mcp-server) |
+| **Docker Image** | `ghcr.io/kbasedatalakehouse/datalake-mcp-server:main` |
+| **GitHub Repo** | [datalake-mcp-server](https://github.com/KBaseDataLakehouse/datalake-mcp-server) |
 | **Python** | 3.13 |
 | **Framework** | FastAPI 0.135 / Uvicorn / MCP 1.26 |
 | **Package Manager** | uv |

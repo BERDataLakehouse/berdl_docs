@@ -2,7 +2,7 @@
 
 | | |
 |---|---|
-| **GitHub Repo** | [datalake-mcp-server-client](https://github.com/BERDataLakehouse/datalake-mcp-server-client) |
+| **GitHub Repo** | [datalake-mcp-server-client](https://github.com/KBaseDataLakehouse/datalake-mcp-server-client) |
 | **Python** | 3.13 (auto-generated client) |
 | **Package Manager** | uv |
 
@@ -34,5 +34,5 @@ The client is generated using the [`openapi-python-client`](https://github.com/o
 Other packages can depend on this client by installing it directly from its git repository or path:
 
 ```bash
-pip install "git+https://github.com/BERDataLakehouse/datalake-mcp-server-client.git"
+pip install "git+https://github.com/KBaseDataLakehouse/datalake-mcp-server-client.git"
 ```

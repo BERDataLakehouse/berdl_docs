@@ -2,7 +2,7 @@
 
 | | |
 |---|---|
-| **GitHub Repo** | [cdm-jupyter-ai-cborg](https://github.com/BERDataLakehouse/cdm-jupyter-ai-cborg) |
+| **GitHub Repo** | [cdm-jupyter-ai-cborg](https://github.com/KBaseDataLakehouse/cdm-jupyter-ai-cborg) |
 | **Python** | >=3.8 (runs in 3.13 notebook environment) |
 
 The `cdm-jupyter-ai-cborg` package enables integration between JupyterLab's built-in AI assistant framework ([Jupyter AI](https://jupyter-ai.readthedocs.io/)) and the [CBorg API provider](https://cborg.lbl.gov/) services available at LBL. 

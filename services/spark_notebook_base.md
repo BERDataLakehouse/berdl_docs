@@ -4,8 +4,8 @@
 
 | | |
 |---|---|
-| **Docker Image** | `ghcr.io/berdatalakehouse/spark_notebook_base:main` |
-| **GitHub Repo** | [spark_notebook_base](https://github.com/BERDataLakehouse/spark_notebook_base) |
+| **Docker Image** | `ghcr.io/kbasedatalakehouse/spark_notebook_base:main` |
+| **GitHub Repo** | [spark_notebook_base](https://github.com/KBaseDataLakehouse/spark_notebook_base) |
 | **Python** | 3.13 |
 | **Package Manager** | uv |
 
@@ -26,7 +26,7 @@ This image provides the core runtime environment for `spark_notebook` and dynami
 - **Multi-stage Build**: Uses Gradle to download JARs in a builder stage, keeping the final image lean.
 - **Jupyter AI**: Pre-installed with CBorg, OpenAI, Anthropic, and Ollama providers.
 - **Data Science Stack**: pandas, scikit-learn, scikit-bio, scipy, biopython, matplotlib, seaborn, scanpy.
-- **`uv` Package Management**: Fast, reliable Python dependency resolution. The Python dependencies are bundled in `pyproject.toml` as the package `berdl-notebook-python-base`. Other repositories can consume these common dependencies by installing `git+https://github.com/BERDataLakehouse/spark_notebook_base.git`.
+- **`uv` Package Management**: Fast, reliable Python dependency resolution. The Python dependencies are bundled in `pyproject.toml` as the package `berdl-notebook-python-base`. Other repositories can consume these common dependencies by installing `git+https://github.com/KBaseDataLakehouse/spark_notebook_base.git`.
 
 ## Build Process
 

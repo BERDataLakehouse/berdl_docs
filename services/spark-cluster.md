@@ -4,8 +4,8 @@
 
 | | |
 |---|---|
-| **Docker Image** | `ghcr.io/berdatalakehouse/kube_spark_manager_image:main` |
-| **GitHub Repo** | [kube_spark_manager_image](https://github.com/BERDataLakehouse/kube_spark_manager_image) |
+| **Docker Image** | `ghcr.io/kbasedatalakehouse/kube_spark_manager_image:main` |
+| **GitHub Repo** | [kube_spark_manager_image](https://github.com/KBaseDataLakehouse/kube_spark_manager_image) |
 | **Base Image** | [spark_notebook](./spark_notebook.md) |
 
 ## Overview

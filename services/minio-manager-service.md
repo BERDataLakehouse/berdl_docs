@@ -4,8 +4,8 @@
 
 | | |
 |---|---|
-| **Docker Image** | `ghcr.io/berdatalakehouse/minio_manager_service:main` |
-| **GitHub Repo** | [minio_manager_service](https://github.com/BERDataLakehouse/minio_manager_service) |
+| **Docker Image** | `ghcr.io/kbasedatalakehouse/minio_manager_service:main` |
+| **GitHub Repo** | [minio_manager_service](https://github.com/KBaseDataLakehouse/minio_manager_service) |
 | **Python** | 3.13 |
 | **Framework** | FastAPI 0.135 / Uvicorn |
 | **Package Manager** | uv |

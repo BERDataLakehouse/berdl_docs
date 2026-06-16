@@ -4,8 +4,8 @@
 
 | | |
 |---|---|
-| **Docker Image** | `ghcr.io/berdatalakehouse/tenant_access_request_service:main` |
-| **GitHub Repo** | [tenant_access_request_service](https://github.com/BERDataLakehouse/tenant_access_request_service) |
+| **Docker Image** | `ghcr.io/kbasedatalakehouse/tenant_access_request_service:main` |
+| **GitHub Repo** | [tenant_access_request_service](https://github.com/KBaseDataLakehouse/tenant_access_request_service) |
 | **Python** | 3.13 |
 | **Framework** | FastAPI 0.135 / Uvicorn |
 | **Package Manager** | uv |

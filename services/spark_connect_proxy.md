@@ -2,8 +2,8 @@
 
 | | |
 |---|---|
-| **Docker Image** | `ghcr.io/berdatalakehouse/spark_connect_proxy:main` |
-| **GitHub Repo** | [spark_connect_proxy](https://github.com/BERDataLakehouse/spark_connect_proxy) |
+| **Docker Image** | `ghcr.io/kbasedatalakehouse/spark_connect_proxy:main` |
+| **GitHub Repo** | [spark_connect_proxy](https://github.com/KBaseDataLakehouse/spark_connect_proxy) |
 | **Python** | 3.13 |
 | **Package Manager** | uv |
 
