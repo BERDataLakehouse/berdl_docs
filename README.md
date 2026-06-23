@@ -10,6 +10,21 @@ All source code repositories are located in the [KBaseDataLakehouse GitHub Organ
 
 All BERDL services require **KBase authentication** using a KBase Token. Users must have the **`BERDL_USER`** role assigned to their KBase account to access the platform. Admin operations additionally require the **`CDM_JUPYTERHUB_ADMIN`** role.
 
+## User Guides
+
+Step-by-step guides for working with the BERDL platform. Guides live under [`user_guides/`](./user_guides).
+
+| Guide | Description |
+|-------|-------------|
+| [Accessing BERDL JupyterHub](./user_guides/user_guide.md) | Getting started: logging in, linking ORCID, roles, and launching a notebook. |
+| [Requesting Tenant Access](./user_guides/requesting-tenant-access.md) | How to request access to tenant groups via the JupyterLab extension. |
+| [Tenant SQL Warehouse](./user_guides/tenant_sql_warehouse_guide.md) | Configuring your Spark session to write to a personal or shared tenant SQL warehouse. |
+| [Data Sharing](./user_guides/data_sharing_guide.md) | Sharing your datasets with other users and groups. |
+| [MinIO](./user_guides/minio_guide.md) | Using MinIO object storage with the `mc` client and Python. |
+| [Installing Custom Python Packages](./user_guides/custom_packages_guide.md) | Creating a persistent custom virtual environment for extra packages. |
+| [Polaris Catalog Migration](./user_guides/iceberg_migration_guide.md) | Migrating from Delta Lake + Hive Metastore to the Polaris (Iceberg) catalog. |
+| [Admin: User & Tenant Management](./user_guides/admin_user_management_guide.md) | Administrative operations for managing users, tenants, and access (requires admin role). |
+
 ## System Architecture
 
 BERDL utilizes a microservices architecture to provide a secure, scalable, and interactive data analysis environment. The core components include dynamic notebook spawning, secure credential management, and an MCP (Model Context Protocol) server for AI-assisted data operations.
