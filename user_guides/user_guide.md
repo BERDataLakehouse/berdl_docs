@@ -187,7 +187,7 @@ If you encounter issues with your notebook environment (such as kernel errors, c
 
 **Step 3:** Wait for the "Stop My Server" button to disappear (this may take 10-30 seconds)
 
-**Step 4:** Once the button disappears, click **My Server** to start a fresh server instance
+**Step 4:** Once the button disappears, click **Start My Server** to start a fresh server instance
 
 > **⚠️ Note:** Stopping your server will close all running notebooks and kernels. Make sure to save your work before restarting.
 
