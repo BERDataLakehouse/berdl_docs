@@ -49,6 +49,20 @@ python -c "from berdl_notebook_utils import get_spark_session; print('BERDL util
 
 ### Step 5: Install Additional Packages
 
+> **❌ Make sure your venv is activated first — never `pip install --user`.**
+> Only run `pip install` **after** `source ~/my_venv/bin/activate` (Step 3); your
+> prompt should show `(my_venv)`. If you run `pip install` outside an activated
+> environment, pip can't write to the read-only base environment and **silently
+> falls back to a `--user` install** into `~/.local`, which **shadows the base
+> image for your whole server** — this can break your JupyterLab file browser,
+> the data object-store drive, and Spark, and it survives restarts. Watch for this
+> line in pip's output — if you see it, **stop**:
+> ```
+> Defaulting to user installation because normal site-packages is not writeable
+> ```
+> Fix: `pip uninstall --user <package>`, then reinstall inside your activated venv
+> (see [Troubleshooting](#a-pip-user-install-broke-my-environment)).
+
 Install only the additional packages you need, including `ipykernel`. In this example, we'll install `plotly` for visualization:
 
 ```bash
@@ -223,6 +237,36 @@ source ~/my_venv/bin/activate
 ```
 
 If the environment doesn't exist, create it first with `python -m venv ~/my_venv`
+
+### A pip user-install broke my environment
+
+Symptoms: your **file browser folder tree won't render**, favorites don't work,
+the object-store (S3) folders 404, or Spark suddenly fails — often after a
+`pip install` you ran without activating a venv, and **it stays broken across
+server restarts**. Cause: a package landed in `~/.local` (a `--user` install) and
+now **shadows the base image** for your entire server (the system Jupyter server
+uses the base Python, and `~/.local` is always on its path).
+
+1. Find what's in your user-site directory:
+   ```bash
+   ls ~/.local/lib/python*/site-packages/
+   ```
+2. Uninstall the offending user-site package(s) so the base-image version is used
+   again (e.g. if you installed `google-cloud-storage`):
+   ```bash
+   pip uninstall -y google-cloud-storage
+   ```
+   To confirm the shadow is gone (this reproduces the failure a fresh server hits,
+   so it should now succeed):
+   ```bash
+   PYTHONPATH="$(echo ~/.local/lib/python*/site-packages)" python -c "import gcsfs; print('OK')"
+   ```
+3. **Stop and Start your server** (Hub → *File → Hub Control Panel → Stop My
+   Server*, then start again) so it reloads cleanly.
+4. Going forward, install packages **only inside an activated venv** (Steps 2–5) —
+   never `pip install --user`.
+
+If you're unsure which package is the culprit, contact the BERDL Platform team.
 
 ## Best Practices
 
