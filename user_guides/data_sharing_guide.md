@@ -25,7 +25,7 @@ All BERDL JupyterHub notebooks automatically import these data governance functi
 
 *Core Information:*
 - `check_governance_health()` - Check service status
-- `get_minio_credentials()` - Get your MinIO credentials (sets environment variables)
+- `get_credentials()` - Get your S3 and Polaris credentials (sets environment variables)
 - `get_my_sql_warehouse()` - Get your SQL warehouse prefix
 - `get_my_workspace()` - Get comprehensive workspace information
 - `get_namespace_prefix(tenant=None)` - Get namespace prefixes for user/tenant
@@ -390,7 +390,7 @@ except Exception as e:
 
 4. **Permission Denied**: You can only share tables that you own. **Make sure the table is stored in your SQL warehouse location.**
 
-5. **Sharing not taking effect**: MinIO policies may take a few seconds to propagate. Wait 5-10 seconds and retry accessing the shared resource.
+5. **Sharing not taking effect**: S3 access policies may take a few seconds to propagate. Wait 5-10 seconds and retry accessing the shared resource.
 
 
 ### Getting Help

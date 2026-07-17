@@ -90,8 +90,8 @@ BERDL uses **Spark Connect**, which provides a client-server architecture:
 
 Your credentials are automatically configured when your notebook server starts:
 
-1. **JupyterHub** calls the governance API to create/retrieve your MinIO and Polaris credentials
-2. **Environment Variables** are set in your notebook (MinIO S3 keys + Polaris OAuth2 tokens)
+1. **JupyterHub** calls the governance API to create/retrieve your S3 and Polaris credentials
+2. **Environment Variables** are set in your notebook (S3 keys + Polaris OAuth2 tokens)
 3. **Spark Session** is pre-configured with access to your personal catalog and tenant catalogs
 4. **Notebooks** use credentials from environment (no API call needed)
 
@@ -114,6 +114,6 @@ spark.sql("""
 
 - **Always use the returned namespace**: `create_namespace_if_not_exists()` returns the fully qualified namespace (e.g., `my.analysis`). Always use this value when creating or querying tables.
 - **Tenant membership required**: Attempting to access a tenant warehouse without membership will fail.
-- **Credentials are automatic**: MinIO and Polaris credentials are set by JupyterHub — you don't need to call any API to get them.
+- **Credentials are automatic**: S3 and Polaris credentials are set by JupyterHub — you don't need to call any API to get them.
 - **Spark Connect is default**: All sessions use Spark Connect for better stability and resource isolation.
 - **Iceberg features**: Your tables support time travel, schema evolution, and snapshot management. See the [Iceberg Migration Guide](iceberg_migration_guide.md) for details.

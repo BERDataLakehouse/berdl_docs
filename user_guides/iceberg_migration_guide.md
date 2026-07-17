@@ -26,7 +26,7 @@ We migrated to **Apache Polaris + Apache Iceberg**, which provides:
 | **Isolation model** | Naming prefixes (`u_user__`, `tenant_`) | Separate catalogs per user/tenant |
 | **Your personal catalog** | Hive (shared, prefix-isolated) | Dedicated Polaris catalog (Spark aliases: `my` or `{username}`; Trino uses `{username}`) |
 | **Tenant catalogs** | Hive (shared, prefix-isolated) | One catalog per tenant (e.g., `kbase`) |
-| **Credentials** | MinIO S3 keys only | MinIO S3 keys + Polaris OAuth2 (auto-provisioned) |
+| **Credentials** | S3 keys only | S3 keys + Polaris OAuth2 (auto-provisioned) |
 | **Spark session** | `get_spark_session()` | `get_spark_session()` (unchanged) |
 
 > **Rollout status:** Polaris/Iceberg is now the **default** in BERDL. `create_namespace_if_not_exists()` creates Iceberg namespaces by default; pass `iceberg=False` only if you specifically need the legacy Delta/Hive flow. Existing Delta Lake tables remain accessible at their original `u_{username}__*` / `{tenant}_*` namespaces during the dual-read window. New tables should be created in Iceberg.
