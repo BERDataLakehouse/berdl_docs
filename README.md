@@ -20,7 +20,7 @@ Step-by-step guides for working with the BERDL platform. Guides live under [`use
 | [Requesting Tenant Access](./user_guides/requesting-tenant-access.md) | How to request access to tenant groups via the JupyterLab extension. |
 | [Tenant SQL Warehouse](./user_guides/tenant_sql_warehouse_guide.md) | Configuring your Spark session to write to a personal or shared tenant SQL warehouse. |
 | [Data Sharing](./user_guides/data_sharing_guide.md) | Sharing your datasets with other users and groups. |
-| [MinIO](./user_guides/minio_guide.md) | Using MinIO object storage with the `mc` client and Python. |
+| [Object Storage (S3)](./user_guides/s3_guide.md) | Accessing S3 object storage from notebooks with the AWS CLI and `boto3`. |
 | [Installing Custom Python Packages](./user_guides/custom_packages_guide.md) | Creating a persistent custom virtual environment for extra packages. |
 | [Polaris Catalog Migration](./user_guides/iceberg_migration_guide.md) | Migrating from Delta Lake + Hive Metastore to the Polaris (Iceberg) catalog. |
 | [Admin: User & Tenant Management](./user_guides/admin_user_management_guide.md) | Administrative operations for managing users, tenants, and access (requires admin role). |

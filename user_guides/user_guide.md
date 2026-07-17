@@ -23,7 +23,7 @@ https://hub.berdl.kbase.us/
 > - Development: `https://hub.dev.berdl.kbase.us/`
 > - Staging: `https://hub.stage.berdl.kbase.us/`
 >
-> For SSH tunnel setup instructions, see the [MinIO Guide - Setting Up SSH Tunnel](minio_guide.md#setting-up-ssh-tunnel) section.
+> For SSH tunnel setup instructions, see the [Object Storage (S3) Guide - Accessing storage from your laptop](s3_guide.md#accessing-storage-from-your-laptop) section.
 
 This will open the JupyterHub login interface.
 
@@ -82,7 +82,7 @@ spark = get_spark_session()
 This automatically configures:
 - Spark Connect server connection
 - Apache Iceberg catalogs (personal `my` + tenant catalogs via Polaris)
-- MinIO S3 access
+- S3 object storage access
 - Delta Lake support (legacy, for backward compatibility)
 
 > **Note:** BERDL has migrated from Delta Lake to Apache Iceberg. See the [Iceberg Migration Guide](iceberg_migration_guide.md) for details on the new catalog structure and Iceberg-specific features like time travel and schema evolution.
@@ -215,7 +215,7 @@ refresh_spark_environment()
 ```
 
 This single call:
-1. Rotates your S3 (MinIO) credentials with the platform
+1. Rotates your S3 credentials with the platform
 2. Rotates your Polaris (Iceberg) credentials
 3. Re-fetches your Polaris catalog list
 4. Stops the existing Spark session
