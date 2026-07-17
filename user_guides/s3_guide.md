@@ -68,6 +68,49 @@ s3.download_file("my-bucket", "path/to/file.parquet", "file.parquet")
 `pandas` (via `s3fs`) works the same way — it picks up the same credentials, so
 `pd.read_parquet("s3://my-bucket/path/to/file.parquet")` just works.
 
+## What you can access (and why you get `AccessDenied`)
+
+Your credentials authenticate you, but a MinIO IAM policy decides which paths you
+can list and read. Access is scoped to **your** data, so an `AccessDenied` on a
+path you aren't entitled to is expected isolation — not a broken setup or a bad key.
+
+Paths you can list/read:
+
+```bash
+aws s3 ls                                                     # your buckets
+aws s3 ls s3://cdm-lake/users-sql-warehouse/<user>/           # your SQL warehouse
+aws s3 ls s3://cdm-lake/tenant-general-warehouse/<tenant>/    # a tenant you belong to
+```
+
+Paths that return `AccessDenied` by design:
+
+```bash
+aws s3 ls s3://cdm-lake/tenant-general-warehouse/    # spans every tenant
+aws s3 ls s3://cdm-spark-job-logs/                   # Spark event logs (see below)
+```
+
+A few things that commonly trip people up:
+
+- **You can't list a whole bucket, or a parent prefix that spans other
+  users/tenants** — only the specific prefixes your policy grants (your
+  `users-sql-warehouse/<user>/`, and the `tenant-general-warehouse/<tenant>/` of
+  tenants you belong to). This is deliberate isolation between users and tenants.
+- **`aws s3 ls` prefix matching has no implicit trailing slash.**
+  `aws s3 ls s3://cdm-lake/tenant-general-warehouse/kbase` matches every prefix
+  *starting with* `kbase`, so it lists both `kbase/` and `kbaseincubator/`. Add
+  the trailing slash (`…/kbase/`) to list inside just that one.
+- **`cdm-spark-job-logs` is effectively write-only for you** — it holds the Spark
+  event logs the platform writes on your behalf, and your policy doesn't grant you
+  `ListBucket` there, so `aws s3 ls` on it is denied even for your own prefix.
+
+To see exactly which prefixes you're entitled to, run in a notebook cell:
+
+```python
+get_my_accessible_paths()   # the prefixes you can list/read
+get_my_sql_warehouse()      # your personal SQL-warehouse prefix
+get_my_policies()           # the raw IAM policy, including its s3:prefix conditions
+```
+
 ## Credentials are kept current automatically
 
 Your S3 credentials rotate from time to time. You do **not** need to reconfigure
