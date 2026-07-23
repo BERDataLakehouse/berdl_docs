@@ -19,6 +19,7 @@ Step-by-step guides for working with the BERDL platform. Guides live under [`use
 | [Accessing BERDL JupyterHub](./user_guides/user_guide.md) | Getting started: logging in, linking ORCID, roles, and launching a notebook. |
 | [Requesting Tenant Access](./user_guides/requesting-tenant-access.md) | How to request access to tenant groups via the JupyterLab extension. |
 | [Tenant SQL Warehouse](./user_guides/tenant_sql_warehouse_guide.md) | Configuring your Spark session to write to a personal or shared tenant SQL warehouse. |
+| [Trino SQL Queries](./user_guides/trino_guide.md) | Interactive read-only SQL over your data lake tables with Trino. |
 | [Data Sharing](./user_guides/data_sharing_guide.md) | Sharing your datasets with other users and groups. |
 | [Object Storage (S3)](./user_guides/s3_guide.md) | Accessing S3 object storage from notebooks with the AWS CLI and `boto3`. |
 | [MinIO Client & UI](./user_guides/minio_guide.md) | Using the `mc` client and MinIO web UI on environments still running MinIO (staging, production). |
