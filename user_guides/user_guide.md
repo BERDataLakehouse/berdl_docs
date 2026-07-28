@@ -193,6 +193,34 @@ If you encounter issues with your notebook environment (such as kernel errors, c
 
 > **💡 Tip:** Your files in your home directory are persistent and will not be deleted when you restart your server.
 
+### Restarting Your Spark Connect Server (Preferred First Step)
+
+**Preferred fix for most Spark issues — the non-rotating restart.** This re-fetches your current credentials **without rotating them**, so it never invalidates credentials in use elsewhere (other kernels, running scripts, remote connections). Try it before `refresh_spark_environment()`.
+
+Common symptoms it fixes:
+
+- `spark.sql("SHOW CATALOGS")` returns only `spark_catalog` — your Iceberg catalogs are missing
+- Queries fail with `SCHEMA_NOT_FOUND` for schemas you know exist
+- `get_spark_session()` fails with `RETRIES_EXCEEDED` or hangs
+- Your Spark session is unresponsive
+
+**The fix:** in any notebook cell, run
+
+```python
+get_credentials()
+start_spark_connect_server(force_restart=True)
+```
+
+then get a fresh session:
+
+```python
+spark = get_spark_session()
+```
+
+> **💡 Tip:** If your Iceberg catalogs are still missing afterwards, restart your kernel (**Kernel → Restart Kernel**) and run the same commands again — a kernel restart re-runs the catalog discovery your Spark configuration depends on.
+
+If the problem persists (especially `403 AccessDenied` errors), use `refresh_spark_environment()` below.
+
 ### Refreshing Your Spark Environment
 
 Use this when your **storage credentials have drifted out of sync** with the platform — even though you're logged in, every data-touching operation silently fails. Common symptoms:
