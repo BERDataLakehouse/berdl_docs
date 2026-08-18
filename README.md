@@ -17,6 +17,7 @@ Step-by-step guides for working with the BERDL platform. Guides live under [`use
 | Guide | Description |
 |-------|-------------|
 | [Accessing BERDL JupyterHub](./user_guides/user_guide.md) | Getting started: logging in, linking ORCID, roles, and launching a notebook. |
+| [KIND*AI](./user_guides/kind_guide.md) | The natural-language front door: AI co-scientist sessions and data portal apps, auto-started for KIND-role holders. |
 | [Requesting Tenant Access](./user_guides/requesting-tenant-access.md) | How to request access to tenant groups via the JupyterLab extension. |
 | [Tenant SQL Warehouse](./user_guides/tenant_sql_warehouse_guide.md) | Configuring your Spark session to write to a personal or shared tenant SQL warehouse. |
 | [Trino SQL Queries](./user_guides/trino_guide.md) | Interactive read-only SQL over your data lake tables with Trino. |
